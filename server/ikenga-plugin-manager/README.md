@@ -1,0 +1,1 @@
+This module provides the functionality needed to manage the plugins installed on an ikenga server.

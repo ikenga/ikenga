@@ -1,0 +1,1 @@
+This module provides the functionality needed to manage the users of an ikenga server.

@@ -1,0 +1,1 @@
+This module provides the ikenga server's interface to a database.

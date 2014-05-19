@@ -1,0 +1,2 @@
+Abstract implementation of a collector plugin that collects metric data from a Subversion repository. This abstract implementation can be extended by concrete
+plugin implementations that want to access a Subversion repository.

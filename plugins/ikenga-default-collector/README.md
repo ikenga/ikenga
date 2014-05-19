@@ -1,0 +1,1 @@
+A default implementation of a collector plugin.

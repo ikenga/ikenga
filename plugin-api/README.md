@@ -1,0 +1,1 @@
+This folder contains all the modules that compose ikenga's plugin API.

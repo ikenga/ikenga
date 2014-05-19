@@ -1,0 +1,1 @@
+This folder contains all plugin modules that ship with ikenga by default.
