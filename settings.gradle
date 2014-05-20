@@ -1,0 +1,16 @@
+rootProject.name = 'ikenga'
+
+include 'plugin-api:ikenga-metrics'
+include 'plugin-api:ikenga-collector-plugin-api'
+include 'plugin-api:ikenga-achievement-plugin-api'
+include 'plugin-api:ikenga-svn-collector-plugin-template'
+
+include 'plugins:ikenga-default-achievements'
+include 'plugins:ikenga-default-collector'
+
+include 'server:ikenga-collector'
+include 'server:ikenga-persistence'
+include 'server:ikenga-plugin-manager'
+include 'server:ikenga-user-manager'
+include 'server:ikenga-web'
+include 'server:ikenga-webhook'
