@@ -8,8 +8,8 @@
 /plugin-api/ikenga-achievement-plugin-api/build
 /plugin-api/ikenga-collector-plugin-api/ikenga-collector-plugin-api.iml
 /plugin-api/ikenga-collector-plugin-api/build
-/plugin-api/ikenga-metrics/ikenga-metrics.iml
-/plugin-api/ikenga-metrics/build
+/plugin-api/ikenga-api/ikenga-api.iml
+/plugin-api/ikenga-api/build
 /plugin-api/ikenga-svn-collector-plugin-template/ikenga-svn-collector-plugin-template.iml
 /plugin-api/ikenga-svn-collector-plugin-template/build
 /plugins/plugins.iml
@@ -32,3 +32,9 @@
 /server/ikenga-web/build
 /server/ikenga-webhook/ikenga-webhook.iml
 /server/ikenga-webhook/build
+/api/api.iml
+/api/build
+/api/ikenga-api/ikenga-api.iml
+/api/ikenga-api/build
+/api/ikenga-svn-collector-plugin-template/ikenga-svn-collector-plugin-template.iml
+/api/ikenga-svn-collector-plugin-template/build

@@ -1,4 +1,4 @@
-package me.ikenga.api.collector;
+package me.ikenga.api.plugins;
 
 import me.ikenga.api.metrics.MetricValue;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Interface for all plugins that collect one or more metrics for any ikenga users from an arbitrary source.
  */
-public interface CollectorPlugin {
+public interface CollectorPlugin extends Plugin {
 
     /**
      * This method is expected to return a list of MetricValues for any number of users. Repeated calls to this method

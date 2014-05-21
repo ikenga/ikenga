@@ -1,9 +1,7 @@
 rootProject.name = 'ikenga'
 
-include 'plugin-api:ikenga-metrics'
-include 'plugin-api:ikenga-collector-plugin-api'
-include 'plugin-api:ikenga-achievement-plugin-api'
-include 'plugin-api:ikenga-svn-collector-plugin-template'
+include 'api:ikenga-api'
+include 'api:ikenga-svn-collector-plugin-template'
 
 include 'plugins:ikenga-default-achievements'
 include 'plugins:ikenga-default-collector'

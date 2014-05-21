@@ -1,0 +1,1 @@
+Basic domain classes and interfaces that constitute the API for extending ikenga.
