@@ -10,6 +10,8 @@ public class Project {
 
     private List<String> activePlugins;
 
+    private List<Player> players;
+
     public Long getId() {
         return id;
     }
@@ -36,5 +38,13 @@ public class Project {
 
     public void setActivePlugins(List<String> activePlugins) {
         this.activePlugins = activePlugins;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 }
