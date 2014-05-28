@@ -11,7 +11,7 @@ public class MetricValue {
 
     private String userId;
 
-    private long value;
+    private Long value;
 
     /**
      * Initializing constructor.
@@ -20,8 +20,8 @@ public class MetricValue {
      * @param userId identifier of the user for which the metric is counted.
      * @param value  the initial value of the metric.
      */
-    public MetricValue(Metric metric, String userId, long value) {
-        if (metric == null || userId == null) {
+    public MetricValue(Metric metric, String userId, Long value) {
+        if (metric == null || userId == null || value == null) {
             throw new NullPointerException("input parameters may not be null!");
         }
         this.userId = userId;
@@ -47,11 +47,11 @@ public class MetricValue {
      *
      * @param valueToAdd the amount to add to the current value.
      */
-    public void add(long valueToAdd) {
+    public void add(Long valueToAdd) {
         this.value += valueToAdd;
     }
 
-    public long getValue() {
+    public Long getValue() {
         return this.value;
     }
 
