@@ -15,7 +15,7 @@ public class PluginManager {
 
     /**
      * Returns all CollectorPlugin implementations that are registered with the JVM's ServiceLoader. See the
-     * ServiceLoader documentation for a description of how to register a plugin.
+     * ServiceLoader documentation for a description on how to register a plugin.
      */
     public List<CollectorPlugin> getCollectorPlugins() {
         return getPlugins(CollectorPlugin.class);
@@ -23,16 +23,17 @@ public class PluginManager {
 
     /**
      * Returns all AchievementPlugin implementations that are registered with the JVM's ServiceLoader. See the
-     * ServiceLoader documentation for a description of how to register a plugin.
+     * ServiceLoader documentation for a description on how to register a plugin.
      */
     public List<AchievementPlugin> getAchievementPlugins() {
         return getPlugins(AchievementPlugin.class);
     }
 
+    @SuppressWarnings("unchecked")
     public <P> List<P> getPlugins(Class<P> pluginClass) {
         ServiceLoader loader = ServiceLoader.load(pluginClass);
         List<P> resultList = new ArrayList<>();
-        Iterator<P> iterator = loader.iterator();
+        Iterator<P> iterator = (Iterator<P>) loader.iterator();
         while (iterator.hasNext()) {
             resultList.add(iterator.next());
         }

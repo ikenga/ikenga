@@ -32,6 +32,8 @@
 /server/ikenga-web/build
 /server/ikenga-webhook/ikenga-webhook.iml
 /server/ikenga-webhook/build
+/server/ikenga-domain/ikenga-domain.iml
+/server/ikenga-domain/build
 /api/api.iml
 /api/build
 /api/ikenga-api/ikenga-api.iml

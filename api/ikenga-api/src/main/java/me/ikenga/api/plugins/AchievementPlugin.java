@@ -1,6 +1,6 @@
 package me.ikenga.api.plugins;
 
-import me.ikenga.api.achievements.SimpleMetricAchievement;
+import me.ikenga.api.achievements.Badge;
 
 import java.util.List;
 
@@ -10,9 +10,9 @@ import java.util.List;
 public interface AchievementPlugin extends Plugin {
 
     /**
-     * Returns all SimpleMetricAchievements this plugin contributes to ikenga.
+     * Returns all achievements of type Badge this plugin contributes to ikenga.
      */
-    public List<SimpleMetricAchievement> getSimpleMetricAchievements();
+    public List<Badge> getBadgeAchievements();
 
 
 }

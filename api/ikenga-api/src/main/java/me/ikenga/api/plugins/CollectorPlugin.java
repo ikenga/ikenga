@@ -17,6 +17,9 @@ public interface CollectorPlugin extends Plugin {
      * This method may return MetricValues for users that are not registered at the ikenga server. These will simply be
      * ignored. For users registered at the ikenga server, the userId of the MetricValue must match to the ikenga userId
      * of the same user.
+     * <p/>
+     * If an exception is thrown in this method, the processing of this plugin will stop, but other plugins will still
+     * be called.
      *
      * @return a list of MetricValues for any number of users.
      */
