@@ -34,9 +34,11 @@
 /server/ikenga-webhook/build
 /server/ikenga-domain/ikenga-domain.iml
 /server/ikenga-domain/build
+/server/ikenga-awarder/build
 /api/api.iml
 /api/build
 /api/ikenga-api/ikenga-api.iml
 /api/ikenga-api/build
 /api/ikenga-svn-collector-plugin-template/ikenga-svn-collector-plugin-template.iml
 /api/ikenga-svn-collector-plugin-template/build
+/server/ikenga-awarder/ikenga-awarder.iml

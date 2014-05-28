@@ -1,0 +1,7 @@
+apply plugin: 'java'
+
+
+dependencies {
+    compile project(":server:ikenga-domain")
+    compile project(":api:ikenga-api")
+}
