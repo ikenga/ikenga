@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ikenga</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<wicket:remove>
+	<link href="../bootstrap.min.css" rel="stylesheet">
+	<link href="../ikenga.css" rel="stylesheet">
+</wicket:remove>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="row header">
+			<div class="col-md-2 logo"></div>
+			<div class="col-md-10">
+				<strong>Ikenga</strong>
+			</div>
+			<div class="row">
+				<div class="col-md-2"><div class="menu"><a wicket:id="linkHighscores">Highscores</a></div></div>
+				<div class="col-md-2"><div class="menu"><a wicket:id="linkUsers">Users</a></div></div>
+				<div class="col-md-2"></div>
+				<div class="col-md-2"></div>
+				<div class="col-md-2"></div>
+				<div class="col-md-2"><div class="menu">Login</div></div>
+			</div>
+		</div>
+		<wicket:child />
+		<div class="row footer">
+			<div class="col-md-12">some kind of footer</div>
+		</div>
+	</div>
+</body>
+</html>

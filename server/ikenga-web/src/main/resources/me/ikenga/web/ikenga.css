@@ -1,0 +1,23 @@
+.header,.footer {
+	background-color: Moccasin;
+}
+
+.logo {
+	height: 5em;
+	background: url("https://avatars0.githubusercontent.com/u/7584021?s=60")
+		no-repeat center;
+}
+
+.header strong {
+	line-height: 1.7em;
+	font-size: 3em;
+}
+
+.menu {
+	text-align: center;
+	margin: 10px;
+	background-color: lightgray;
+	border: 2px solid;
+	border-radius: 25px;
+	box-shadow: 5px 5px 5px #888888;
+}
