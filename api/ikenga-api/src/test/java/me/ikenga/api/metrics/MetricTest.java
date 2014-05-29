@@ -18,8 +18,8 @@ public class MetricTest {
         attributes2.put("fileType", ".txt");
         attributes2.put("color", "red");
 
-        Metric metric1 = new Metric("me.ikenga.testmetric", attributes1);
-        Metric metric2 = new Metric("me.ikenga.testmetric", attributes2);
+        Metric metric1 = new Metric("me.ikenga.testmetric");
+        Metric metric2 = new Metric("me.ikenga.testmetric");
 
         Assert.assertEquals(metric1, metric2);
     }
