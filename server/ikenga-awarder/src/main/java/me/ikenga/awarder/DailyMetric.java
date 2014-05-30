@@ -1,14 +1,13 @@
-package me.ikenga.web.persistence;
+package me.ikenga.awarder;
 
-import java.util.Calendar;
-import java.util.Date;
+import org.apache.commons.lang3.time.DateUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-import org.apache.commons.lang3.time.DateUtils;
+import java.util.Calendar;
+import java.util.Date;
 
 @Entity
 public class DailyMetric {
@@ -25,7 +24,7 @@ public class DailyMetric {
 	}
 
 	public DailyMetric(Date date, String userName, String metricName,
-			Long value) {
+                       Long value) {
 		this.day = DateUtils.truncate(date, Calendar.DATE);
 		this.userName = userName;
 		this.metricName = metricName;

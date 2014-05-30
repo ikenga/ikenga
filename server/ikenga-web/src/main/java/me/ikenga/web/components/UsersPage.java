@@ -2,8 +2,8 @@ package me.ikenga.web.components;
 
 import java.util.List;
 
-import me.ikenga.web.persistence.DailyMetric;
-import me.ikenga.web.persistence.DailyMetricsRepository;
+import me.ikenga.awarder.DailyMetric;
+import me.ikenga.awarder.DailyMetricsRepository;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;

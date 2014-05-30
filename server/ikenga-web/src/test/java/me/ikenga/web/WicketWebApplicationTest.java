@@ -1,5 +1,6 @@
 package me.ikenga.web;
 
+import me.ikenga.IkengaWebApplication;
 import me.ikenga.web.components.HighscoresPage;
 import me.ikenga.web.components.UsersPage;
 

@@ -2,19 +2,20 @@ apply plugin: 'java'
 apply plugin: 'spring-boot'
 
 dependencies {
-	compile(
-		"org.springframework.boot:spring-boot-starter",
-		"org.springframework.boot:spring-boot-starter-logging",
-		"org.springframework.boot:spring-boot-starter-tomcat",
-		"org.springframework.boot:spring-boot-starter-data-jpa",
-		"org.springframework:spring-web:4.0.3.RELEASE",
-		"org.springframework:spring-webmvc:4.0.3.RELEASE",
-		"org.apache.wicket:wicket-spring:6.15.0",
-		"org.hsqldb:hsqldb:2.3.2",
-		"org.apache.commons:commons-lang3:3.3.2",
-		)
-		
-	testCompile(
-		"org.springframework.boot:spring-boot-starter-test",
-	)
+    compile(
+            "org.springframework.boot:spring-boot-starter",
+            "org.springframework.boot:spring-boot-starter-logging",
+            "org.springframework.boot:spring-boot-starter-tomcat",
+            "org.springframework.boot:spring-boot-starter-data-jpa",
+            "org.springframework:spring-web:4.0.3.RELEASE",
+            "org.springframework:spring-webmvc:4.0.3.RELEASE",
+            "org.apache.wicket:wicket-spring:6.15.0",
+            "org.hsqldb:hsqldb:2.3.2",
+            "org.apache.commons:commons-lang3:3.3.2",
+            project(":server:ikenga-awarder"),
+    )
+
+    testCompile(
+            "org.springframework.boot:spring-boot-starter-test",
+    )
 }

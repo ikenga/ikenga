@@ -1,6 +1,6 @@
 package me.ikenga.web.components;
 
-import me.ikenga.web.IkengaWebApplication;
+import me.ikenga.IkengaWebApplication;
 
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;

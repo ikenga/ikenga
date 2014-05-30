@@ -1,11 +1,11 @@
-package me.ikenga.web;
+package me.ikenga;
 
 import java.util.Date;
 
+import me.ikenga.awarder.DailyMetric;
 import me.ikenga.web.components.HighscoresPage;
 import me.ikenga.web.components.UsersPage;
-import me.ikenga.web.persistence.DailyMetric;
-import me.ikenga.web.persistence.DailyMetricsRepository;
+import me.ikenga.awarder.DailyMetricsRepository;
 
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
@@ -41,7 +41,7 @@ public class IkengaWebApplication extends WebApplication {
 
 	/**
 	 * spring boot main method to build context
-	 * 
+	 *
 	 * @param args
 	 */
 	public static void main(String[] args) {
