@@ -19,7 +19,7 @@ public abstract class BasePage extends WebPage {
 
 	@Override
 	public void renderHead(IHeaderResponse response) {
-		addCssToHeader("bootstrap.min.css", response);
+		addCssToHeader("theme.min.css", response);
 		addCssToHeader("ikenga.css", response);
 	}
 
