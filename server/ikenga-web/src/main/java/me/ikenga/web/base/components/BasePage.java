@@ -17,16 +17,4 @@ public abstract class BasePage extends WebPage {
 		add(new BookmarkablePageLink<String>("linkUsers", UsersPage.class));
 	}
 
-	@Override
-	public void renderHead(IHeaderResponse response) {
-		addCssToHeader("theme.min.css", response);
-		addCssToHeader("ikenga.css", response);
-	}
-
-	private void addCssToHeader(String cssFileName, IHeaderResponse response) {
-		PackageResourceReference cssReference = new CssResourceReference(
-				IkengaWebApplication.class, cssFileName);
-		response.render(CssHeaderItem.forReference(cssReference));
-	}
-
 }
