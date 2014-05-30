@@ -1,4 +1,4 @@
-package me.ikenga.web.components;
+package me.ikenga.web.base.components;
 
 import me.ikenga.IkengaWebApplication;
 

@@ -3,8 +3,8 @@ package me.ikenga;
 import java.util.Date;
 
 import me.ikenga.awarder.DailyMetric;
-import me.ikenga.web.components.HighscoresPage;
-import me.ikenga.web.components.UsersPage;
+import me.ikenga.web.base.components.HighscoresPage;
+import me.ikenga.web.base.components.UsersPage;
 import me.ikenga.awarder.DailyMetricsRepository;
 
 import org.apache.wicket.Page;
