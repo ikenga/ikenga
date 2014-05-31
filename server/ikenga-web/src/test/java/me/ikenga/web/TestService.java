@@ -1,6 +1,5 @@
 package me.ikenga.web;
 
-import me.ikenga.IkengaWebApplication;
 import org.apache.wicket.util.tester.WicketTester;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package me.ikenga.web;
 
-import me.ikenga.IkengaWebApplication;
-import me.ikenga.IkengaWebInitializer;
+import me.ikenga.IkengaBoot;
+import me.ikenga.configuration.IkengaWebInitializer;
 import me.ikenga.web.base.components.HighscoresPage;
 import me.ikenga.web.base.components.UsersPage;
 
@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { IkengaWebInitializer.class,
-		IkengaWebApplication.class })
+		IkengaBoot.class })
 public class WicketWebApplicationTest {
 
 	@Autowired

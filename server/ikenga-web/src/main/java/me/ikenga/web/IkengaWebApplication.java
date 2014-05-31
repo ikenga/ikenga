@@ -1,4 +1,4 @@
-package me.ikenga;
+package me.ikenga.web;
 
 import java.util.Date;
 
@@ -21,15 +21,13 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 /**
- * The web application class also serves as spring boot starting point by using
- * spring boot's EnableAutoConfiguration annotation and providing the main
+ * The web application class also serves as spring configuration starting point by using
+ * spring configuration's EnableAutoConfiguration annotation and providing the main
  * method.
  *
  * @author kloe
  */
 @Component
-@EnableAutoConfiguration
-@ComponentScan
 public class IkengaWebApplication extends WebApplication {
 
     private final static Logger logger = LoggerFactory
@@ -38,29 +36,6 @@ public class IkengaWebApplication extends WebApplication {
     @Autowired
     private ApplicationContext applicationContext;
 
-    /**
-     * spring boot main method to build context
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(
-                IkengaWebApplication.class, args);
-
-        DailyMetricsRepository repository = context
-                .getBean(DailyMetricsRepository.class);
-        Date now = new Date();
-        repository.save(new DailyMetric(now, "kloe", "LINES_OF_CODE", 20L));
-        repository.save(new DailyMetric(now, "steven", "LINES_OF_CODE", 30L));
-        repository.save(new DailyMetric(now, "penta", "LINES_OF_CODE", 10L));
-        repository.save(new DailyMetric(now, "kloe", "ADDED_LINES", 20L));
-        repository.save(new DailyMetric(now, "steven", "ADDED_LINES", 25L));
-        repository.save(new DailyMetric(now, "penta", "ADDED_LINES", 8L));
-        repository.save(new DailyMetric(now, "kloe", "REMOVED_LINES", 0L));
-        repository.save(new DailyMetric(now, "steven", "REMOVED_LINES", 5L));
-        repository.save(new DailyMetric(now, "penta", "REMOVED_LINES", 2L));
-
-    }
 
     /**
      * provides page for default request
