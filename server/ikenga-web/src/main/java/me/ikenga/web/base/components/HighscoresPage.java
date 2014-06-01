@@ -21,7 +21,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  * 
  * @author kloe
  */
-public class HighscoresPage extends BasePage {
+public class HighscoresPage extends DashboardPage {
 
 	@SpringBean
 	private DailyMetricsRepository dailyMetricsRepository;

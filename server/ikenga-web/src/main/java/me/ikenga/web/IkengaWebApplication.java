@@ -58,6 +58,7 @@ public class IkengaWebApplication extends WebApplication {
         super.init();
         getComponentInstantiationListeners().add(
                 new SpringComponentInjector(this, applicationContext));
+        getMarkupSettings().setStripWicketTags(true);
         mountPage("/highscores.html", HighscoresPage.class);
         mountPage("/users.html", UsersPage.class);
     }

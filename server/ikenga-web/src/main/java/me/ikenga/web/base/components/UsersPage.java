@@ -12,7 +12,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class UsersPage extends BasePage {
+public class UsersPage extends DashboardPage{
 
 	private static final Logger logger = LoggerFactory
 			.getLogger(UsersPage.class);
