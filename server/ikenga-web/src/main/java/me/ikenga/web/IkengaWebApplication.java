@@ -78,7 +78,7 @@ public class IkengaWebApplication extends WebApplication {
         SvnCollector svnCollector = applicationContext.getBean(SvnCollector.class);
         if (svnCollector.init()) {
             ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-            ScheduledFuture<?> handle = executor.scheduleAtFixedRate(svnCollector, 0l, 5l, TimeUnit.MINUTES);
+            final ScheduledFuture<?> handle = executor.scheduleAtFixedRate(svnCollector, 0l, 5l, TimeUnit.MINUTES);
             executor.schedule(new Runnable() {
                 public void run() {
                     handle.cancel(false);
