@@ -1,34 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Ikenga</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-	<wicket:extend>
-		<div class="row content">
-			<div class="col-md-12">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>Username</th>
-							<th>Date</th>
-							<th>Metric</th>
-							<th>Value</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr wicket:id="userList">
-							<td><span wicket:id="name"/></td>
-							<td><span wicket:id="date"/></td>
-							<td><span wicket:id="metric"/></td>
-							<td><span wicket:id="value"/></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</wicket:extend>
+    <head>
+        <title>Ikenga</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+    <wicket:extend>
+        <div class="row content">
+            <div class="col-md-12">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Date</th>
+                            <th>Metric</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr wicket:id="userList">
+                            <td><span wicket:id="name"/></td>
+                            <td><span wicket:id="metric"/></td>
+                            <td><span wicket:id="value"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </wicket:extend>
 </body>
 </html>

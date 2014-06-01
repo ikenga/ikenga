@@ -13,6 +13,8 @@ dependencies {
             "org.hsqldb:hsqldb:2.3.2",
             "org.apache.commons:commons-lang3:3.3.2",
             project(":server:ikenga-awarder"),
+            "org.tmatesoft.svnkit:svnkit:1.8.5",
+            "commons-io:commons-io:2.4",
     )
 
     testCompile(

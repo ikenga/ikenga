@@ -3,44 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package me.ikenga.web.base.components;
 
 import java.util.List;
+import me.ikenga.api.metrics.MetricValue;
 
-import me.ikenga.awarder.DailyMetric;
-import me.ikenga.awarder.DailyMetricsRepository;
+import me.ikenga.awarder.MetricEntity;
+import me.ikenga.awarder.MetricRepository;
 
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * 
+ *
  * @author kloe
  */
 public class HighscoresPage extends DashboardPage {
 
-	@SpringBean
-	private DailyMetricsRepository dailyMetricsRepository;
+    private static final Logger logger = LoggerFactory.getLogger(HighscoresPage.class);
 
-	public HighscoresPage(final PageParameters parameters) {
-		List<DailyMetric> metricsList = dailyMetricsRepository
-				.findHighestValues();
-		add(new ListView<DailyMetric>("userList", metricsList) {
+    @SpringBean
+    private MetricRepository metricRepository;
 
-			@Override
-			protected void populateItem(ListItem<DailyMetric> item) {
-				DailyMetric dailyMetrics = item.getModelObject();
-				item.add(new Label("date", dailyMetrics.getDay()));
-				item.add(new Label("name", dailyMetrics.getUserName()));
-				item.add(new Label("metric", dailyMetrics.getMetricName()));
-				item.add(new Label("value", dailyMetrics.getValue()));
-			}
+    public HighscoresPage(final PageParameters parameters) {
+        List<MetricValue> metricsList = metricRepository.findHighestValues();
+        add(new ListView<MetricValue>("userList", metricsList) {
 
-		});
-	}
+            @Override
+            protected void populateItem(ListItem<MetricValue> item) {
+                logger.info(item + " -> " + item.getModelObject().getClass());
+                MetricValue metric = item.getModelObject();
+                item.add(new Label("name", metric.getUserId()));
+                item.add(new Label("metric", metric.getMetric().getIdentifier()));
+                item.add(new Label("value", metric.getValue()));
+            }
+
+        });
+    }
 
 }
