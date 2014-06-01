@@ -42,3 +42,5 @@
 /api/ikenga-svn-collector-plugin-template/ikenga-svn-collector-plugin-template.iml
 /api/ikenga-svn-collector-plugin-template/build
 /server/ikenga-awarder/ikenga-awarder.iml
+/.nb-gradle/private/
+/server/ikenga-harvester/build/
