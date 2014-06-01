@@ -1,9 +1,9 @@
 package me.ikenga.web;
 
-import me.ikenga.web.base.components.*;
+import me.ikenga.base.ui.*;
 
-import me.ikenga.web.user.components.LoginPage;
-import me.ikenga.web.user.components.RegistrationPage;
+import me.ikenga.user.ui.LoginPage;
+import me.ikenga.user.ui.RegistrationPage;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.settings.IExceptionSettings;

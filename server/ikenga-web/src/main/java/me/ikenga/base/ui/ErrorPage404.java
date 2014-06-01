@@ -1,11 +1,11 @@
-package me.ikenga.web.base.components;
+package me.ikenga.base.ui;
 
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-public class ErrorPage500 extends BasePage {
+public class ErrorPage404 extends BasePage {
 
-    public ErrorPage500(){
+    public ErrorPage404(){
         add(new AjaxEventBehavior("onload") {
             @Override
             protected void onEvent(AjaxRequestTarget target) {

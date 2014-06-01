@@ -1,9 +1,9 @@
 package me.ikenga.web;
 
 import me.ikenga.IkengaBoot;
-import me.ikenga.configuration.IkengaWebInitializer;
-import me.ikenga.web.base.components.HighscoresPage;
-import me.ikenga.web.base.components.UsersPage;
+import me.ikenga.base.configuration.IkengaWebInitializer;
+import me.ikenga.base.ui.HighscoresPage;
+import me.ikenga.base.ui.UsersPage;
 
 import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Test;

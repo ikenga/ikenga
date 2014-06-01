@@ -1,4 +1,4 @@
-package me.ikenga.configuration;
+package me.ikenga.base.configuration;
 
 import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;

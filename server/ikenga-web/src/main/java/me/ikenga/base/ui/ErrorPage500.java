@@ -1,12 +1,11 @@
-package me.ikenga.web.user.components;
+package me.ikenga.base.ui;
 
-import me.ikenga.web.base.components.BasePage;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-public class LoginPage extends BasePage {
+public class ErrorPage500 extends BasePage {
 
-    public LoginPage() {
+    public ErrorPage500(){
         add(new AjaxEventBehavior("onload") {
             @Override
             protected void onEvent(AjaxRequestTarget target) {
@@ -15,5 +14,4 @@ public class LoginPage extends BasePage {
             }
         });
     }
-
 }

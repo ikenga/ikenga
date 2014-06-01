@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-package me.ikenga.web.base.components;
+package me.ikenga.base.ui;
 
 import java.util.List;
 
@@ -14,26 +8,28 @@ import me.ikenga.awarder.DailyMetricsRepository;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * 
- * @author kloe
- */
-public class HighscoresPage extends DashboardPage {
+public class UsersPage extends DashboardPage{
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(UsersPage.class);
 
 	@SpringBean
 	private DailyMetricsRepository dailyMetricsRepository;
 
-	public HighscoresPage(final PageParameters parameters) {
+	public UsersPage() {
 		List<DailyMetric> metricsList = dailyMetricsRepository
-				.findHighestValues();
+				.findByUserName("kloe");
 		add(new ListView<DailyMetric>("userList", metricsList) {
 
 			@Override
 			protected void populateItem(ListItem<DailyMetric> item) {
 				DailyMetric dailyMetrics = item.getModelObject();
+				logger.info("processing metric data: "
+						+ dailyMetrics.toString());
 				item.add(new Label("date", dailyMetrics.getDay()));
 				item.add(new Label("name", dailyMetrics.getUserName()));
 				item.add(new Label("metric", dailyMetrics.getMetricName()));

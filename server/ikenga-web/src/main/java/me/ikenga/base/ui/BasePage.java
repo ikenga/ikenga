@@ -1,4 +1,4 @@
-package me.ikenga.web.base.components;
+package me.ikenga.base.ui;
 
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
