@@ -7,6 +7,8 @@ import me.ikenga.web.base.components.HighscoresPage;
 import me.ikenga.web.base.components.UsersPage;
 import me.ikenga.awarder.DailyMetricsRepository;
 
+import me.ikenga.web.user.components.LoginPage;
+import me.ikenga.web.user.components.RegistrationPage;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -59,8 +61,11 @@ public class IkengaWebApplication extends WebApplication {
         getComponentInstantiationListeners().add(
                 new SpringComponentInjector(this, applicationContext));
         getMarkupSettings().setStripWicketTags(true);
-        mountPage("/highscores.html", HighscoresPage.class);
-        mountPage("/users.html", UsersPage.class);
+
+        mountPage("/highscores", HighscoresPage.class);
+        mountPage("/users", UsersPage.class);
+        mountPage("/register", RegistrationPage.class);
+        mountPage("/login", LoginPage.class);
     }
 
 }
