@@ -4,6 +4,7 @@ import org.apache.wicket.util.tester.WicketTester;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import me.ikenga.IkengaWebApplication;
 
 /**
  * This class is used mainly to encapsulate the initialization of the
