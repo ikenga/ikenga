@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:hsqldb:file:~/.ikenga/db/db;hsqldb.write_delay=true;shutdown=true
+    url: jdbc:hsqldb:file:~/.ikenga/db/db;hsqldb.write_delay=false;shutdown=true
     
   jpa:
     show-sql: true
