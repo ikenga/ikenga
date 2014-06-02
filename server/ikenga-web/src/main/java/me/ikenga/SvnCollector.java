@@ -134,7 +134,7 @@ public class SvnCollector implements Runnable {
         RevisionEntity latestProcessedRevision = latestProcessedRevisionRepository.findByHostAndPath(svnurl.getHost(), svnurl.getPath());
         if(latestProcessedRevision==null){
             latestProcessedRevision = new RevisionEntity();
-            latestProcessedRevision.setRevision(0l);
+            latestProcessedRevision.setRevision(5700l);
             latestProcessedRevision.setHost(svnurl.getHost());
             latestProcessedRevision.setPath(svnurl.getPath());
         }
@@ -167,7 +167,7 @@ public class SvnCollector implements Runnable {
                 }
             }
             for (Map.Entry<String, Long> entry : actions.entrySet()) {
-                MetricEntity metricData = new MetricEntity(date, author, entry.getKey(), entry.getValue());
+                MetricEntity metricData = new MetricEntity(date, author, entry.getKey(), entry.getValue(), logEntry.getMessage());
                 metricRepository.save(metricData);
             }
         }
