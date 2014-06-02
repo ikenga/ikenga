@@ -1,12 +1,12 @@
-package me.ikenga.user.ui;
+package me.ikenga.user.login.ui;
 
 import me.ikenga.base.ui.BasePage;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 
-public class RegistrationPage extends BasePage {
+public class LoginPage extends BasePage {
 
-    public RegistrationPage() {
+    public LoginPage() {
         add(new AjaxEventBehavior("onload") {
             @Override
             protected void onEvent(AjaxRequestTarget target) {

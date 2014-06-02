@@ -1,9 +1,8 @@
-package me.ikenga.web;
+package me.ikenga;
 
-import me.ikenga.web.base.components.*;
-
-import me.ikenga.web.user.components.LoginPage;
-import me.ikenga.web.user.components.RegistrationPage;
+import me.ikenga.base.ui.*;
+import me.ikenga.user.login.ui.LoginPage;
+import me.ikenga.user.registration.ui.RegistrationPage;
 import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.settings.IExceptionSettings;
@@ -65,21 +64,6 @@ public class IkengaWebApplication extends WebApplication {
         mountPage("/error403", ErrorPage403.class);
         mountPage("/error404", ErrorPage404.class);
         mountPage("/error500", ErrorPage500.class);
-        initializeSvnCollector();
-    }
-
-    private void initializeSvnCollector() {
-
-        SvnCollector svnCollector = applicationContext.getBean(SvnCollector.class);
-        if (svnCollector.init()) {
-            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-            final ScheduledFuture<?> handle = executor.scheduleAtFixedRate(svnCollector, 0l, 5l, TimeUnit.MINUTES);
-            executor.schedule(new Runnable() {
-                public void run() {
-                    handle.cancel(false);
-                }
-            }, 5l, TimeUnit.DAYS);
-        }
     }
 
 }

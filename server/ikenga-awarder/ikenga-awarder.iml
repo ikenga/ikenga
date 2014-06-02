@@ -32,6 +32,7 @@
     <orderEntry type="library" exported="" name="Gradle: spring-expression-3.2.8.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: spring-context-3.2.8.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="Gradle: aspectjrt-1.7.4" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: commons-io-2.4" level="project" />
   </component>
 </module>
 
