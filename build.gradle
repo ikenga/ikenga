@@ -13,12 +13,13 @@ repositories {
 
 ext {
     libraries = [
-            // default dependencies for an ikenga server module
-            ikengaModule: [
+        // default dependencies for an ikenga server module
+        ikengaModule: [
                     "org.apache.commons:commons-lang3:3.3.2",
+                    "commons-io:commons-io:2.4",
                     "org.springframework.data:spring-data-jpa:1.5.2.RELEASE",
                     "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final"
-            ]
+        ]
     ]
 
 }
@@ -30,6 +31,9 @@ subprojects {
 
     repositories {
         mavenCentral()
+        maven {
+            url "http://maven.tmatesoft.com/content/repositories/releases/"
+        }
     }
 
     dependencies {

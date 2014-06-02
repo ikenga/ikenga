@@ -28,6 +28,15 @@ public class MetricValue {
         this.metric = metric;
         this.value = value;
     }
+    
+        public MetricValue(String metric, String userId, Long value) {
+        if (metric == null || userId == null || value == null) {
+            throw new NullPointerException("input parameters may not be null!");
+        }
+        this.userId = userId;
+        this.metric = new Metric(metric);
+        this.value = value;
+    }
 
     /**
      * Initializing constructor.

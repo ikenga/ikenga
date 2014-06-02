@@ -10,33 +10,33 @@ import java.util.Calendar;
 import java.util.Date;
 
 @Entity
-public class DailyMetric {
+public class MetricData {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	private Date day;
+	private Date date;
 	private String userName;
 	private String metricName;
 	private Long value;
 
-	protected DailyMetric() {
+	protected MetricData() {
 	}
 
-	public DailyMetric(Date date, String userName, String metricName,
+	public MetricData(Date date, String userName, String metricName,
                        Long value) {
-		this.day = DateUtils.truncate(date, Calendar.DATE);
+		this.date = DateUtils.truncate(date, Calendar.DATE);
 		this.userName = userName;
 		this.metricName = metricName;
 		this.value = value;
 	}
 
-	public Date getDay() {
-		return day;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setDay(Date day) {
-		this.day = day;
+	public void setDate(Date day) {
+		this.date = day;
 	}
 
 	public String getUserName() {
@@ -66,7 +66,7 @@ public class DailyMetric {
 	@Override
 	public String toString() {
 		return String.format("%s has %d in %s on %s", userName, value,
-				metricName, day);
+				metricName, date);
 	}
 
 }
