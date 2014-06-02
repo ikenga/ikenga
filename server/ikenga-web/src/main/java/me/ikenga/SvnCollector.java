@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PropertyResourceBundle;
+
+import me.ikenga.awarder.RevisionEntity;
+import me.ikenga.awarder.RevisionRepository;
 import me.ikenga.awarder.MetricEntity;
 import me.ikenga.awarder.MetricRepository;
 import org.apache.commons.io.FileUtils;
@@ -22,12 +25,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.tmatesoft.svn.core.ISVNLogEntryHandler;
-import org.tmatesoft.svn.core.SVNException;
-import org.tmatesoft.svn.core.SVNLogEntry;
-import org.tmatesoft.svn.core.SVNLogEntryPath;
-import org.tmatesoft.svn.core.SVNURL;
-import org.tmatesoft.svn.core.internal.wc.DefaultSVNOptions;
+import org.tmatesoft.svn.core.*;
+import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
+import org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory;
+import org.tmatesoft.svn.core.io.SVNRepository;
+import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
 import org.tmatesoft.svn.core.wc.SVNClientManager;
 import org.tmatesoft.svn.core.wc.SVNLogClient;
 import org.tmatesoft.svn.core.wc.SVNRevision;
@@ -46,6 +48,9 @@ public class SvnCollector implements Runnable {
     @Autowired
     private MetricRepository metricRepository;
 
+    @Autowired
+    RevisionRepository latestProcessedRevisionRepository;
+
     private final static String PARAM_USER_NAME = "username";
     private final static String PARAM_PASSWORD = "password";
     private final static String PARAM_PROTOCOL = "protocol";
@@ -56,8 +61,7 @@ public class SvnCollector implements Runnable {
     private final static String SEPARATOR = "=\n";
     private final static String CONFIG = PARAM_USER_NAME + SEPARATOR + PARAM_PASSWORD + SEPARATOR + PARAM_PROTOCOL + SEPARATOR + PARAM_HOST + SEPARATOR + PARAM_PORT + SEPARATOR + PARAM_PATH + SEPARATOR;
 
-    private SVNClientManager clientManager;
-
+    private SVNRepository repository;
     private SVNURL svnurl;
 
     public boolean init() {
@@ -78,7 +82,6 @@ public class SvnCollector implements Runnable {
             logger.error("could not load config file", ex);
             return false;
         }
-        initializeClientManager(properties);
         if (StringUtils.isBlank(properties.getString(PARAM_PROTOCOL)) || StringUtils.isBlank(properties.getString(PARAM_HOST)) || StringUtils.isBlank(properties.getString(PARAM_PORT)) || StringUtils.isBlank(properties.getString(PARAM_PATH))) {
             logger.error("config is empty");
             return false;
@@ -90,16 +93,18 @@ public class SvnCollector implements Runnable {
             logger.error("config is not filled correctly", ex);
             return false;
         }
-        return true;
-    }
 
-    private void initializeClientManager(PropertyResourceBundle properties) {
-        if (StringUtils.isNotBlank(properties.getString(PARAM_USER_NAME)) && StringUtils.isNotBlank(properties.getString(PARAM_PASSWORD))) {
-            DefaultSVNOptions options = SVNWCUtil.createDefaultOptions(true);
-            clientManager = SVNClientManager.newInstance(options, properties.getString(PARAM_USER_NAME), properties.getString(PARAM_PASSWORD));
-        } else {
-            clientManager = SVNClientManager.newInstance();
+        try {
+            DAVRepositoryFactory.setup();
+            repository = SVNRepositoryFactory.create(svnurl);
+            ISVNAuthenticationManager authManager =
+                    SVNWCUtil.createDefaultAuthenticationManager(properties.getString(PARAM_USER_NAME), properties.getString(PARAM_PASSWORD));
+            repository.setAuthenticationManager(authManager);
+        } catch (SVNException e) {
+            e.printStackTrace();
         }
+
+        return true;
     }
 
     @Override
@@ -107,11 +112,33 @@ public class SvnCollector implements Runnable {
         logger.debug("searching for new revisions");
         SVNLogClient logClient = SVNClientManager.newInstance().getLogClient();
         try {
-            logClient.doLog(svnurl, null, SVNRevision.HEAD, SVNRevision.create(0l),
-                    SVNRevision.HEAD, false, true, true, 0, null, new LogEntryHandler());
+
+            RevisionEntity latestProcessedRevision = getLatestProcessedRevision();
+
+            SVNRevision fromRevision = SVNRevision.create(latestProcessedRevision.getRevision());
+            SVNRevision headRevision = SVNRevision.create(repository.info(".", -1).getRevision());
+
+            if(!fromRevision.equals(headRevision)){
+                logClient.doLog(svnurl, null, SVNRevision.HEAD, fromRevision,
+                        SVNRevision.HEAD, false, true, true, 0, null, new LogEntryHandler());
+                latestProcessedRevision.setRevision(headRevision.getNumber());
+                latestProcessedRevisionRepository.save(latestProcessedRevision);
+            }
+
         } catch (SVNException ex) {
             logger.error("error accessing svn", ex);
         }
+    }
+
+    public RevisionEntity getLatestProcessedRevision() {
+        RevisionEntity latestProcessedRevision = latestProcessedRevisionRepository.findByHostAndPath(svnurl.getHost(), svnurl.getPath());
+        if(latestProcessedRevision==null){
+            latestProcessedRevision = new RevisionEntity();
+            latestProcessedRevision.setRevision(0l);
+            latestProcessedRevision.setHost(svnurl.getHost());
+            latestProcessedRevision.setPath(svnurl.getPath());
+        }
+       return latestProcessedRevision;
     }
 
     class LogEntryHandler implements ISVNLogEntryHandler {
