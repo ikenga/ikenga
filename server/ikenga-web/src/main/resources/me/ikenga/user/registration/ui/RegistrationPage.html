@@ -26,19 +26,15 @@
         <form wicket:id="registrationForm">
             <div class="body bg-gray">
 
-                <div wicket:id="feedback"/>
+                <div wicket:id="usernameField"/>
 
-                <div class="form-group">
-                    <input wicket:id="usernameField" type="text" name="name" class="form-control" placeholder="User Name"/>
-                </div>
-                <div class="form-group">
-                    <input wicket:id="emailField" type="text" name="userid" class="form-control" placeholder="Email"/>
-                </div>
+                <div wicket:id="emailField"/>
+
                 <div class="form-group">
                     <input wicket:id="passwordField" type="password" name="password" class="form-control" placeholder="Password"/>
                 </div>
                 <div class="form-group">
-                    <input wicket:id="retypedPasswordField" type="password" name="password2" class="form-control" placeholder="Retype password"/>
+                    <input wicket:id="retypedPasswordField" type="password" name="retypedPassword" class="form-control" placeholder="Retype password"/>
                 </div>
             </div>
             <div class="footer">

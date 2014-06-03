@@ -2295,7 +2295,7 @@ Component: timeline
 .form-box .footer > .form-group {
   margin-top: 20px;
 }
-.form-box .body > .form-group > input,
+/*.form-box .body > .form-group > input,*/
 .form-box .footer > .form-group > input {
   border: #fff;
 }

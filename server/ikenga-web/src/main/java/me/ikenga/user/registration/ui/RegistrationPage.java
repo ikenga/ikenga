@@ -17,7 +17,7 @@ public class RegistrationPage extends BasePage {
         });
     }
 
-    private void initComponents(){
+    private void initComponents() {
         add(new RegistrationForm("registrationForm"));
     }
 
