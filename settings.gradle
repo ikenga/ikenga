@@ -6,7 +6,6 @@ include 'api:ikenga-svn-collector-plugin-template'
 include 'plugins:ikenga-default-achievements'
 include 'plugins:ikenga-default-collector'
 
-include 'server:ikenga-harvester'
 include 'server:ikenga-plugin-manager'
 include 'server:ikenga-user-manager'
 include 'server:ikenga-web'
