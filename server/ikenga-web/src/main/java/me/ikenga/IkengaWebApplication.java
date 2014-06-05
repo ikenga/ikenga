@@ -13,6 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+
 /**
  * The web application class also serves as spring configuration starting point by using
  * spring configuration's EnableAutoConfiguration annotation and providing the main
@@ -61,9 +66,23 @@ public class IkengaWebApplication extends WebApplication {
         mountPage("/users", UsersPage.class);
         mountPage("/register", RegistrationPage.class);
         mountPage("/login", LoginPage.class);
+        mountPage("/Level", LevelPage.class);
         mountPage("/error403", ErrorPage403.class);
         mountPage("/error404", ErrorPage404.class);
         mountPage("/error500", ErrorPage500.class);
+
+
+        SvnCollector svnCollector = applicationContext.getBean(SvnCollector.class);
+        if (svnCollector.init()) {
+            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+            final ScheduledFuture<?> handle = executor.scheduleAtFixedRate(svnCollector, 0l, 5l, TimeUnit.MINUTES);
+            executor.schedule(new Runnable() {
+                public void run() {
+                    handle.cancel(false);
+                }
+            }, 5l, TimeUnit.DAYS);
+        }
+
     }
 
 }
