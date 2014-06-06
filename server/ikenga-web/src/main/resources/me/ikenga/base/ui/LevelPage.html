@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ikenga</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<wicket:extend>
+    <div class="row content">
+        <div class="col-md-12">
+            <table>
+                <tbody>
+                <tr wicket:id="usersList">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr colspan="4"><h1 wicket:id="userLabel">d</h1></tr>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Progress</th>
+                            <th>Level</th>
+                            <th>Value</th>
+                        </tr>
+                        </thead>
+                        <tr wicket:id="userList">
+                            <td><span wicket:id="metric"/></td>
+                            <td><span class="skin-blue" wicket:id="bar"/></td>
+                            <td><Label wicket:id="level"/></td>
+                            <td><span wicket:id="value"/></td>
+                        </tr>
+                    </table>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</wicket:extend>
+</body>
+</html>
