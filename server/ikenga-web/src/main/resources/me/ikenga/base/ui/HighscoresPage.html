@@ -9,22 +9,12 @@
     <wicket:extend>
         <div class="row content">
             <div class="col-md-12">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Metric</th>
-                            <th>Username</th>                            
-                            <th>Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr wicket:id="userList">
-                            <td><span wicket:id="metric"/></td>
-                            <td><span wicket:id="name"/></td>
-                            <td><span wicket:id="value"/></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <h1 wicket:id="addLabel"></h1>
+                <div wicket:id="addListPanel"></div>
+                <h1 wicket:id="remLabel"></h1>
+                <div wicket:id="remListPanel"></div>
+                <h1 wicket:id="updLabel"></h1>
+                <div wicket:id="updListPanel"></div>
             </div>
         </div>
     </wicket:extend>

@@ -19,16 +19,18 @@ public class MetricEntity {
     private String userName;
     private String metricName;
     private Long value;
+    private String message;
 
     protected MetricEntity() {
     }
 
     public MetricEntity(Date date, String userName, String metricName,
-            Long value) {
+            Long value, String message) {
         this.date = DateUtils.truncate(date, Calendar.DATE);
         this.userName = userName;
         this.metricName = metricName;
         this.value = value;
+        this.message = message;
     }
 
     // TODO: check if necessary, may be a good idea to use DTO class
@@ -43,8 +45,8 @@ public class MetricEntity {
         return date;
     }
 
-    public void setDay(Date day) {
-        this.date = day;
+    public void setDay(Date date) {
+        this.date = date;
     }
 
     public String getUserName() {
@@ -69,6 +71,14 @@ public class MetricEntity {
 
     public void setValue(Long value) {
         this.value = value;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override

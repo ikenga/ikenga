@@ -12,9 +12,11 @@ import me.ikenga.api.metrics.MetricValue;
 import me.ikenga.awarder.MetricEntity;
 import me.ikenga.awarder.MetricRepository;
 
+import me.ikenga.base.ui.panel.MetricHighscorePanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
@@ -32,19 +34,14 @@ public class HighscoresPage extends DashboardPage {
     private MetricRepository metricRepository;
 
     public HighscoresPage(final PageParameters parameters) {
-        List<MetricValue> metricsList = metricRepository.findHighestValues();
-        add(new ListView<MetricValue>("userList", metricsList) {
 
-            @Override
-            protected void populateItem(ListItem<MetricValue> item) {
-                logger.info(item + " -> " + item.getModelObject().getClass());
-                MetricValue metric = item.getModelObject();
-                item.add(new Label("name", metric.getUserId()));
-                item.add(new Label("metric", metric.getMetric().getIdentifier()));
-                item.add(new Label("value", metric.getValue()));
-            }
+        add(new Label("addLabel", Model.of("Add Highscore")));
+        add(new MetricHighscorePanel("addListPanel", "SvnAddCount"));
+        add(new Label("remLabel", Model.of("Remove Highscore")));
+        add(new MetricHighscorePanel("remListPanel", "SvnDeleteCount"));
+        add(new Label("updLabel", Model.of("Update Highscore")));
+        add(new MetricHighscorePanel("updListPanel", "SvnModifyCount"));
 
-        });
     }
 
 }
