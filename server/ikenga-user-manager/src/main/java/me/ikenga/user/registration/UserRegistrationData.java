@@ -1,11 +1,11 @@
-package me.ikenga.user.registration.ui;
+package me.ikenga.user.registration;
 
 import java.io.Serializable;
 
 /**
- * Bean to capture the data from the registration form.
+ * Bean to capture all data needed for a user registration.
  */
-public class RegistrationFormBean implements Serializable {
+public class UserRegistrationData implements Serializable {
 
     private String username;
 

@@ -3,6 +3,10 @@ apply plugin: 'java'
 
 dependencies {
     compile(
-            libraries.ikengaModule
+            libraries.ikengaModule,
+    )
+
+    testCompile(
+            project(":server:ikenga-test"),
     )
 }

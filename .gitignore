@@ -22,8 +22,6 @@
 /server/build
 /server/ikenga-collector/ikenga-collector.iml
 /server/ikenga-collector/build
-/server/ikenga-persistence/ikenga-persistence.iml
-/server/ikenga-persistence/build
 /server/ikenga-plugin-manager/ikenga-plugin-manager.iml
 /server/ikenga-plugin-manager/build
 /server/ikenga-user-manager/ikenga-user-manager.iml
@@ -32,10 +30,10 @@
 /server/ikenga-web/build
 /server/ikenga-webhook/ikenga-webhook.iml
 /server/ikenga-webhook/build
-/server/ikenga-domain/ikenga-domain.iml
-/server/ikenga-domain/build
 /server/ikenga-awarder/build
 /server/ikenga-awarder/ikenga-awarder.iml
+/server/ikenga-test/build
+/server/ikenga-test/ikenga-test.iml
 /api/api.iml
 /api/build
 /api/ikenga-api/ikenga-api.iml
@@ -43,5 +41,3 @@
 /api/ikenga-svn-collector-plugin-template/ikenga-svn-collector-plugin-template.iml
 /api/ikenga-svn-collector-plugin-template/build
 /.nb-gradle/private/
-/server/ikenga-harvester/build/
-/server/ikenga-harvester/ikenga-harvester.iml

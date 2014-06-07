@@ -2,26 +2,25 @@ package me.ikenga.user.registration.ui;
 
 import me.ikenga.base.ui.components.forms.PasswordFieldPanel;
 import me.ikenga.base.ui.components.forms.TextFieldPanel;
+import me.ikenga.user.registration.UserRegistrationData;
 import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 
 import static org.wicketstuff.lazymodel.LazyModel.from;
 import static org.wicketstuff.lazymodel.LazyModel.model;
 
-public class RegistrationForm extends Form<RegistrationFormBean> {
+public class RegistrationForm extends Form<UserRegistrationData> {
 
     public RegistrationForm(String id) {
-        super(id, Model.of(new RegistrationFormBean()));
+        super(id, Model.of(new UserRegistrationData()));
         initComponents();
     }
 
     private void initComponents() {
-        RegistrationFormBean bean = getModelObject();
+        UserRegistrationData bean = getModelObject();
 
         TextFieldPanel<String> usernamePanel = new TextFieldPanel<>("usernameField", model(from(bean).getUsername()));
         usernamePanel.getField().setRequired(true);
@@ -49,6 +48,6 @@ public class RegistrationForm extends Form<RegistrationFormBean> {
 
     @Override
     protected void onSubmit() {
-        RegistrationFormBean bean = getModelObject();
+        UserRegistrationData bean = getModelObject();
     }
 }
