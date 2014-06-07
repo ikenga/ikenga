@@ -6,24 +6,17 @@
 
 package me.ikenga.base.ui;
 
-import java.util.List;
-import me.ikenga.api.metrics.MetricValue;
-
-import me.ikenga.awarder.MetricEntity;
 import me.ikenga.awarder.MetricRepository;
-
 import me.ikenga.base.ui.panel.MetricHighscorePanel;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 /**
- * 
  * @author kloe
  */
 public class HighscoresPage extends DashboardPage {

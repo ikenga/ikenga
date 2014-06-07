@@ -1,10 +1,18 @@
 package me.ikenga;
 
+import me.ikenga.authorization.IkengaAuthorizationStrategy;
 import me.ikenga.base.ui.*;
 import me.ikenga.user.login.ui.LoginPage;
 import me.ikenga.user.registration.ui.RegistrationPage;
 import org.apache.wicket.Page;
+import org.apache.wicket.Session;
+import org.apache.wicket.authorization.IAuthorizationStrategy;
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
 import org.apache.wicket.settings.IExceptionSettings;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.slf4j.Logger;
@@ -62,6 +70,8 @@ public class IkengaWebApplication extends WebApplication {
         getApplicationSettings().setInternalErrorPage(ErrorPage500.class);
         getApplicationSettings().setAccessDeniedPage(ErrorPage403.class);
 
+        getSecuritySettings().setAuthorizationStrategy(getAuthorizationStrategy());
+
         mountPage("/highscores", HighscoresPage.class);
         mountPage("/users", UsersPage.class);
         mountPage("/register", RegistrationPage.class);
@@ -84,5 +94,15 @@ public class IkengaWebApplication extends WebApplication {
         }
 
     }
+
+    public IAuthorizationStrategy getAuthorizationStrategy() {
+        return new IkengaAuthorizationStrategy();
+    }
+
+    @Override
+    public Session newSession(Request request, Response response) {
+        return new IkengaSession(request);
+    }
+
 
 }

@@ -21,7 +21,7 @@ import me.ikenga.IkengaWebApplication;
 public class TestService implements InitializingBean {
 
 	@Autowired
-	private IkengaWebApplication wicketWebApplication;
+	private FakeIkengaWebApplication wicketWebApplication;
 
 	private WicketTester wicketTester;
 
