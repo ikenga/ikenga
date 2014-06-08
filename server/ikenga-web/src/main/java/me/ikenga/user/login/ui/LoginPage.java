@@ -37,42 +37,4 @@ public class LoginPage extends BasePage {
         });
     }
 
-    private class LoginForm extends Form<LoginCredentials> {
-
-        private FormComponent usernameField;
-
-        public LoginForm(String id) {
-            super(id, Model.of(new LoginCredentials()));
-            initComponents();
-        }
-
-        private void initComponents() {
-            LoginCredentials credentials = getModelObject();
-
-            TextFieldPanel<String> usernamePanel = new TextFieldPanel<>("usernameField", model(from(credentials).getUsername()));
-            usernamePanel.getField().add(new AttributeAppender("placeholder", "Username"));
-            usernamePanel.getField().setRequired(true);
-            usernameField = usernamePanel.getField();
-            add(usernamePanel);
-
-            PasswordFieldPanel passwordPanel = new PasswordFieldPanel("passwordField", model(from(credentials).getPassword()));
-            passwordPanel.getField().add(new AttributeAppender("placeholder", "Password"));
-            passwordPanel.getField().setRequired(true);
-            add(passwordPanel);
-        }
-
-        @Override
-        protected void onSubmit() {
-            try {
-                LoginCredentials credentials = getModelObject();
-                LoginData loginData = loginService.login(credentials);
-                IkengaSession session = (IkengaSession) IkengaSession.get();
-                session.login(loginData);
-                setResponsePage(getApplication().getHomePage());
-            } catch (InvalidLoginCredentialsException e) {
-                usernameField.error(getString("loginForm.usernameField.fieldGroup.field.invalidCredentials"));
-            }
-        }
-    }
-
 }

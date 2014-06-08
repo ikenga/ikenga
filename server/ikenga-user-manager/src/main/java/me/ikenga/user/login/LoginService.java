@@ -24,9 +24,9 @@ public class LoginService {
      * @throws InvalidLoginCredentialsException if the given credentials are not valid.
      */
     public LoginData login(LoginCredentials credentials) throws InvalidLoginCredentialsException {
-        String username = credentials.getUsername();
+        String username = credentials.getUsernameOrEmail();
         String hashedPassword = passwordHasher.hashPassword(credentials.getPassword());
-        User user = userRepository.findByUsernameAndHashedPassword(username, hashedPassword);
+        User user = userRepository.findByUsernameOrEmailAndHashedPassword(username, hashedPassword);
         if (user == null) {
             throw new InvalidLoginCredentialsException();
         } else {

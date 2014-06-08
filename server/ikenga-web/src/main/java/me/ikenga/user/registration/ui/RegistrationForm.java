@@ -75,7 +75,7 @@ public class RegistrationForm extends Form<RegistrationData> {
 
             // login user directly after registration
             LoginCredentials credentials = new LoginCredentials();
-            credentials.setUsername(registrationData.getUsername());
+            credentials.setUsernameOrEmail(registrationData.getUsername());
             credentials.setPassword(registrationData.getPassword());
             LoginData loginData = loginService.login(credentials);
             IkengaSession session = (IkengaSession) IkengaSession.get();

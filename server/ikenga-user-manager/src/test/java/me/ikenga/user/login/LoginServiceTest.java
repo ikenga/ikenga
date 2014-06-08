@@ -27,7 +27,7 @@ public class LoginServiceTest extends BaseTest {
         // given
         LoginCredentials credentials = createLoginCredentials();
 
-        when(userRepository.findByUsernameAndHashedPassword(anyString(), anyString())).thenReturn(createLoggedInUser());
+        when(userRepository.findByUsernameOrEmailAndHashedPassword(anyString(), anyString())).thenReturn(createLoggedInUser());
 
         // when
         LoginData loginData = loginService.login(credentials);
@@ -40,7 +40,7 @@ public class LoginServiceTest extends BaseTest {
     public void testLoginFailure() {
         // given
         LoginCredentials credentials = createLoginCredentials();
-        when(userRepository.findByUsernameAndHashedPassword(anyString(), anyString())).thenReturn(null);
+        when(userRepository.findByUsernameOrEmailAndHashedPassword(anyString(), anyString())).thenReturn(null);
 
         // when
         loginService.login(credentials);
@@ -50,7 +50,7 @@ public class LoginServiceTest extends BaseTest {
 
     private LoginCredentials createLoginCredentials() {
         LoginCredentials credentials = new LoginCredentials();
-        credentials.setUsername("tom");
+        credentials.setUsernameOrEmail("tom");
         credentials.setPassword("pw");
         return credentials;
     }
