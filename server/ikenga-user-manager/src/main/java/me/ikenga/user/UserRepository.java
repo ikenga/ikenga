@@ -10,4 +10,6 @@ public interface UserRepository extends
 
     User findByEmail(String email);
 
+    User findByUsernameAndHashedPassword(String username, String hashedPassword);
+
 }

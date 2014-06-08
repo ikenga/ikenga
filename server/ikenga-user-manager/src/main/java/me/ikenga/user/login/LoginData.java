@@ -1,4 +1,4 @@
-package me.ikenga;
+package me.ikenga.user.login;
 
 import java.io.Serializable;
 

@@ -1,6 +1,7 @@
 package me.ikenga;
 
 import me.ikenga.authorization.Role;
+import me.ikenga.user.login.LoginData;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 

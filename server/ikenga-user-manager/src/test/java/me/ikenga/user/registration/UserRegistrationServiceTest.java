@@ -22,11 +22,6 @@ public class UserRegistrationServiceTest extends BaseTest {
     @Mock
     private UserRepository userRepository;
 
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-    }
-
     @Test
     public void testRegisterSuccess() {
         // given

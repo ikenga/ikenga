@@ -1,6 +1,8 @@
 package me.ikenga;
 
+import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -14,5 +16,10 @@ import javax.transaction.Transactional;
 @ContextConfiguration(classes = {TestConfiguration.class})
 @Transactional
 public abstract class BaseTest {
+
+    @Before
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+    }
 
 }

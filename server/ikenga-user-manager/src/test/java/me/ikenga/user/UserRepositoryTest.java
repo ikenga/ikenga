@@ -50,6 +50,28 @@ public class UserRepositoryTest extends BaseTest {
         Assert.assertNull(foundUser);
     }
 
+    @Test
+    public void testFindByUsernameAndHashedPassword() {
+        // given
+        User user = createDummyUser();
+        user.setUsername("tom");
+        user.setHashedPassword("pw");
+
+
+        // when
+        userRepository.save(user);
+
+        // then
+        User foundUser = userRepository.findByUsernameAndHashedPassword("tom", "pw");
+        Assert.assertNotNull(foundUser);
+    }
+
+    @Test
+    public void testFindByUsernameAndHashedPasswordNull() {
+        User foundUser = userRepository.findByUsernameAndHashedPassword("tom", "pw");
+        Assert.assertNull(foundUser);
+    }
+
     private User createDummyUser() {
         User user = new User();
         user.setEmail("tom@ikenga.me");
