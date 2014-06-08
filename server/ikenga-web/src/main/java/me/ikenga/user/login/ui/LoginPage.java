@@ -68,6 +68,7 @@ public class LoginPage extends BasePage {
                 LoginData loginData = loginService.login(credentials);
                 IkengaSession session = (IkengaSession) IkengaSession.get();
                 session.login(loginData);
+                setResponsePage(getApplication().getHomePage());
             } catch (InvalidLoginCredentialsException e) {
                 usernameField.error(getString("loginForm.usernameField.fieldGroup.field.invalidCredentials"));
             }

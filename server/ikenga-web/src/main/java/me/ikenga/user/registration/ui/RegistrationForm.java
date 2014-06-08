@@ -1,7 +1,11 @@
 package me.ikenga.user.registration.ui;
 
+import me.ikenga.IkengaSession;
 import me.ikenga.base.ui.components.forms.PasswordFieldPanel;
 import me.ikenga.base.ui.components.forms.TextFieldPanel;
+import me.ikenga.user.login.LoginCredentials;
+import me.ikenga.user.login.LoginData;
+import me.ikenga.user.login.LoginService;
 import me.ikenga.user.registration.EmailAlreadyExistsException;
 import me.ikenga.user.registration.RegistrationData;
 import me.ikenga.user.registration.RegistrationService;
@@ -21,6 +25,9 @@ public class RegistrationForm extends Form<RegistrationData> {
 
     @SpringBean
     private RegistrationService registrationService;
+
+    @SpringBean
+    private LoginService loginService;
 
     private FormComponent usernameField;
 
@@ -65,6 +72,16 @@ public class RegistrationForm extends Form<RegistrationData> {
         try {
             RegistrationData registrationData = getModelObject();
             registrationService.register(registrationData);
+
+            // login user directly after registration
+            LoginCredentials credentials = new LoginCredentials();
+            credentials.setUsername(registrationData.getUsername());
+            credentials.setPassword(registrationData.getPassword());
+            LoginData loginData = loginService.login(credentials);
+            IkengaSession session = (IkengaSession) IkengaSession.get();
+            session.login(loginData);
+
+            setResponsePage(getApplication().getHomePage());
         } catch (UsernameAlreadyExistsException e) {
             usernameField.error(getString("usernameField.alreadyExists"));
         } catch (EmailAlreadyExistsException e) {
