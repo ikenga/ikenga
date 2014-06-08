@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserRegistrationService {
+public class RegistrationService {
 
     @Autowired
     private UserRepository userRepository;
@@ -22,7 +22,7 @@ public class UserRegistrationService {
      * @throws me.ikenga.user.registration.UsernameAlreadyExistsException if there is another user in the database with the same username.
      * @throws me.ikenga.user.registration.EmailAlreadyExistsException    if there is another user in the database with the same email address.
      */
-    public void register(UserRegistrationData registrationData) throws UsernameAlreadyExistsException, EmailAlreadyExistsException {
+    public void register(RegistrationData registrationData) throws UsernameAlreadyExistsException, EmailAlreadyExistsException {
 
         if (usernameExists(registrationData.getUsername())) {
             throw new UsernameAlreadyExistsException();
@@ -37,7 +37,7 @@ public class UserRegistrationService {
 
     }
 
-    private User mapRegistrationData(UserRegistrationData registrationData) {
+    private User mapRegistrationData(RegistrationData registrationData) {
         User user = new User();
         user.setHashedPassword(passwordHasher.hashPassword(registrationData.getPassword()));
         user.setUsername(registrationData.getUsername());

@@ -3,8 +3,8 @@ package me.ikenga.user.registration.ui;
 import me.ikenga.base.ui.components.forms.PasswordFieldPanel;
 import me.ikenga.base.ui.components.forms.TextFieldPanel;
 import me.ikenga.user.registration.EmailAlreadyExistsException;
-import me.ikenga.user.registration.UserRegistrationData;
-import me.ikenga.user.registration.UserRegistrationService;
+import me.ikenga.user.registration.RegistrationData;
+import me.ikenga.user.registration.RegistrationService;
 import me.ikenga.user.registration.UsernameAlreadyExistsException;
 import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.form.Form;
@@ -17,22 +17,22 @@ import org.apache.wicket.validation.validator.EmailAddressValidator;
 import static org.wicketstuff.lazymodel.LazyModel.from;
 import static org.wicketstuff.lazymodel.LazyModel.model;
 
-public class RegistrationForm extends Form<UserRegistrationData> {
+public class RegistrationForm extends Form<RegistrationData> {
 
     @SpringBean
-    private UserRegistrationService registrationService;
+    private RegistrationService registrationService;
 
     private FormComponent usernameField;
 
     private FormComponent emailField;
 
     public RegistrationForm(String id) {
-        super(id, Model.of(new UserRegistrationData()));
+        super(id, Model.of(new RegistrationData()));
         initComponents();
     }
 
     private void initComponents() {
-        UserRegistrationData bean = getModelObject();
+        RegistrationData bean = getModelObject();
 
         TextFieldPanel<String> usernamePanel = new TextFieldPanel<>("usernameField", model(from(bean).getUsername()));
         usernamePanel.getField().setRequired(true);
@@ -63,7 +63,7 @@ public class RegistrationForm extends Form<UserRegistrationData> {
     @Override
     protected void onSubmit() {
         try {
-            UserRegistrationData registrationData = getModelObject();
+            RegistrationData registrationData = getModelObject();
             registrationService.register(registrationData);
         } catch (UsernameAlreadyExistsException e) {
             usernameField.error(getString("usernameField.alreadyExists"));

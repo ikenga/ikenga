@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Bean to capture all data needed for a user registration.
  */
-public class UserRegistrationData implements Serializable {
+public class RegistrationData implements Serializable {
 
     private String username;
 
