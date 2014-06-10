@@ -23,7 +23,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.tmatesoft.svn.core.*;
 import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
@@ -40,16 +41,16 @@ import org.tmatesoft.svn.core.wc.SVNWCUtil;
  * @author Stefan Kloe
  */
 @Component
-@Scope("prototype")
-public class SvnCollector implements Runnable {
+@EnableScheduling
+public class SvnCollector {
 
     private static final Logger logger = LoggerFactory.getLogger(SvnCollector.class);
-    
+
     @Autowired
     private MetricRepository metricRepository;
 
     @Autowired
-    RevisionRepository latestProcessedRevisionRepository;
+    private RevisionRepository latestProcessedRevisionRepository;
 
     private final static String PARAM_USER_NAME = "username";
     private final static String PARAM_PASSWORD = "password";
@@ -61,64 +62,33 @@ public class SvnCollector implements Runnable {
     private final static String SEPARATOR = "=\n";
     private final static String CONFIG = PARAM_USER_NAME + SEPARATOR + PARAM_PASSWORD + SEPARATOR + PARAM_PROTOCOL + SEPARATOR + PARAM_HOST + SEPARATOR + PARAM_PORT + SEPARATOR + PARAM_PATH + SEPARATOR;
 
-    private SVNRepository repository;
-    private SVNURL svnurl;
-
-    public boolean init() {
-        File config = new File(System.getProperty("user.home"),".ikenga/SvnCollector.properties");
-        if (!config.exists()) {
-            logger.info("no config file found, creating template");
-            try {
-                FileUtils.write(config, CONFIG, CharEncoding.UTF_8);
-            } catch (IOException ex) {
-                logger.error("could not write config file", ex);
-            }
-            return false;
-        }
-        PropertyResourceBundle properties;
-        try (FileInputStream fileInputStream = new FileInputStream(config)) {
-            properties = new PropertyResourceBundle(fileInputStream);
-        } catch (IOException ex) {
-            logger.error("could not load config file", ex);
-            return false;
-        }
-        if (StringUtils.isBlank(properties.getString(PARAM_PROTOCOL)) || StringUtils.isBlank(properties.getString(PARAM_HOST)) || StringUtils.isBlank(properties.getString(PARAM_PORT)) || StringUtils.isBlank(properties.getString(PARAM_PATH))) {
-            logger.error("config is empty");
-            return false;
-        }
-        try {
-            svnurl = SVNURL.create(properties.getString(PARAM_PROTOCOL), null, properties.getString(PARAM_HOST), Integer.valueOf(properties.getString(PARAM_PORT)),
-                    properties.getString(PARAM_PATH), true);
-        } catch (SVNException ex) {
-            logger.error("config is not filled correctly", ex);
-            return false;
-        }
-
-        try {
-            DAVRepositoryFactory.setup();
-            repository = SVNRepositoryFactory.create(svnurl);
-            ISVNAuthenticationManager authManager =
-                    SVNWCUtil.createDefaultAuthenticationManager(properties.getString(PARAM_USER_NAME), properties.getString(PARAM_PASSWORD));
-            repository.setAuthenticationManager(authManager);
-        } catch (SVNException e) {
-            e.printStackTrace();
-        }
-
-        return true;
-    }
-
-    @Override
+    @Scheduled(fixedDelay = 20000)
     public void run() {
+        PropertyResourceBundle properties = getProperties();
+        if (properties == null) {
+            return;
+        }
+
+        SVNURL svnurl = createSvnUrl(properties);
+        if (svnurl == null) {
+            return;
+        }
+
+        SVNRepository repository = createRepository(properties, svnurl);
+        if (repository == null) {
+            return;
+        }
+
         logger.debug("searching for new revisions");
         SVNLogClient logClient = SVNClientManager.newInstance().getLogClient();
         try {
 
-            RevisionEntity latestProcessedRevision = getLatestProcessedRevision();
+            RevisionEntity latestProcessedRevision = getLatestProcessedRevision(svnurl);
 
             SVNRevision fromRevision = SVNRevision.create(latestProcessedRevision.getRevision());
             SVNRevision headRevision = SVNRevision.create(repository.info(".", -1).getRevision());
 
-            if(!fromRevision.equals(headRevision)){
+            if (!fromRevision.equals(headRevision)) {
                 logClient.doLog(svnurl, null, SVNRevision.HEAD, fromRevision,
                         SVNRevision.HEAD, false, true, true, 0, null, new LogEntryHandler());
                 latestProcessedRevision.setRevision(headRevision.getNumber());
@@ -130,15 +100,64 @@ public class SvnCollector implements Runnable {
         }
     }
 
-    public RevisionEntity getLatestProcessedRevision() {
+    public PropertyResourceBundle getProperties() {
+        File config = new File(System.getProperty("user.home"), ".ikenga/SvnCollector.properties");
+        if (!config.exists()) {
+            logger.info("no config file found, creating template");
+            try {
+                FileUtils.write(config, CONFIG, CharEncoding.UTF_8);
+            } catch (IOException ex) {
+                logger.error("could not write config file", ex);
+            }
+            return null;
+        }
+        PropertyResourceBundle properties;
+        try (FileInputStream fileInputStream = new FileInputStream(config)) {
+            properties = new PropertyResourceBundle(fileInputStream);
+        } catch (IOException ex) {
+            logger.error("could not load config file", ex);
+            return null;
+        }
+        if (StringUtils.isBlank(properties.getString(PARAM_PROTOCOL)) || StringUtils.isBlank(properties.getString(PARAM_HOST)) || StringUtils.isBlank(properties.getString(PARAM_PORT)) || StringUtils.isBlank(properties.getString(PARAM_PATH))) {
+            logger.error("config is empty");
+            return null;
+        }
+        return properties;
+    }
+
+    private SVNURL createSvnUrl(PropertyResourceBundle properties) throws NumberFormatException {
+        try {
+            return SVNURL.create(properties.getString(PARAM_PROTOCOL), null, properties.getString(PARAM_HOST), Integer.valueOf(properties.getString(PARAM_PORT)),
+                    properties.getString(PARAM_PATH), true);
+        } catch (SVNException ex) {
+            logger.error("config is not filled correctly", ex);
+        }
+        return null;
+    }
+
+    private SVNRepository createRepository(PropertyResourceBundle properties, SVNURL svnurl) {
+        try {
+            DAVRepositoryFactory.setup();
+            SVNRepository repository = SVNRepositoryFactory.create(svnurl);
+            ISVNAuthenticationManager authManager
+                    = SVNWCUtil.createDefaultAuthenticationManager(properties.getString(PARAM_USER_NAME), properties.getString(PARAM_PASSWORD));
+            repository.setAuthenticationManager(authManager);
+            return repository;
+        } catch (SVNException ex) {
+            logger.error("could not create SvnRepositoryFactory", ex);
+        }
+        return null;
+    }
+
+    public RevisionEntity getLatestProcessedRevision(SVNURL svnurl) {
         RevisionEntity latestProcessedRevision = latestProcessedRevisionRepository.findByHostAndPath(svnurl.getHost(), svnurl.getPath());
-        if(latestProcessedRevision==null){
+        if (latestProcessedRevision == null) {
             latestProcessedRevision = new RevisionEntity();
             latestProcessedRevision.setRevision(5700l);
             latestProcessedRevision.setHost(svnurl.getHost());
             latestProcessedRevision.setPath(svnurl.getPath());
         }
-       return latestProcessedRevision;
+        return latestProcessedRevision;
     }
 
     class LogEntryHandler implements ISVNLogEntryHandler {

@@ -80,19 +80,6 @@ public class IkengaWebApplication extends WebApplication {
         mountPage("/error403", ErrorPage403.class);
         mountPage("/error404", ErrorPage404.class);
         mountPage("/error500", ErrorPage500.class);
-
-
-        SvnCollector svnCollector = applicationContext.getBean(SvnCollector.class);
-        if (svnCollector.init()) {
-            ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-            final ScheduledFuture<?> handle = executor.scheduleAtFixedRate(svnCollector, 0l, 5l, TimeUnit.MINUTES);
-            executor.schedule(new Runnable() {
-                public void run() {
-                    handle.cancel(false);
-                }
-            }, 5l, TimeUnit.DAYS);
-        }
-
     }
 
     public IAuthorizationStrategy getAuthorizationStrategy() {
