@@ -1,39 +1,38 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Ikenga</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-<wicket:extend>
-    <div class="row content">
-        <div class="col-md-12">
-            <table>
-                <tbody>
-                <tr wicket:id="usersList">
-                    <table class="table table-striped">
-                        <thead>
-                        <tr colspan="4"><h1 wicket:id="userLabel">d</h1></tr>
-                        <tr>
-                            <th>Metric</th>
-                            <th>Progress</th>
-                            <th>Level</th>
-                            <th>Value</th>
-                        </tr>
-                        </thead>
-                        <tr wicket:id="userList">
-                            <td><span wicket:id="metric"/></td>
-                            <td><span class="skin-blue" wicket:id="bar"/></td>
-                            <td><Label wicket:id="level"/></td>
-                            <td><span wicket:id="value"/></td>
-                        </tr>
-                    </table>
-                </tr>
-                </tbody>
-            </table>
+    <head>
+        <title>Ikenga</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+    <wicket:extend>
+        <div class="row content">
+            <div class="col-md-2"><h3>Metric</h3></div>
+            <div class="col-md-2"><h3>Level</h3></div>
+            <div class="col-md-7"><h3>Progress</h3></div>
+            <div class="col-md-1"><h3>Value</h3></div>
+            <div class="clearfix"></div>
+            <div class="box box-solid box-primary" wicket:id="userBox">          
+                <div class="box-header">
+                    <h3 class="box-title"><span wicket:id="userName"></span></h3>
+                </div>     
+                <div class="box-body">
+                    <div wicket:id="userMetrics">
+                        <div class="col-md-2"><span wicket:id="metricName"></span></div>
+                        <div class="col-md-2"><span wicket:id="metricLevel"></span></div>
+                        <div class="col-md-7">
+                            <div class="progress progress-striped">
+                                <div class="progress-bar progress-bar-yellow" role="progressbar" wicket:id="metricProgress"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"><span wicket:id="metricValue"></span></div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
         </div>
-    </div>
-</wicket:extend>
+    </wicket:extend>
 </body>
 </html>
