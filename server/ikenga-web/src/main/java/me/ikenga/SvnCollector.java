@@ -5,18 +5,10 @@
  */
 package me.ikenga;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.PropertyResourceBundle;
-
-import me.ikenga.awarder.RevisionEntity;
-import me.ikenga.awarder.RevisionRepository;
 import me.ikenga.awarder.MetricEntity;
 import me.ikenga.awarder.MetricRepository;
+import me.ikenga.awarder.RevisionEntity;
+import me.ikenga.awarder.RevisionRepository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
@@ -36,8 +28,13 @@ import org.tmatesoft.svn.core.wc.SVNLogClient;
 import org.tmatesoft.svn.core.wc.SVNRevision;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
+import java.io.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PropertyResourceBundle;
+
 /**
- *
  * @author Stefan Kloe
  */
 @Component
@@ -45,6 +42,9 @@ import org.tmatesoft.svn.core.wc.SVNWCUtil;
 public class SvnCollector {
 
     private static final Logger logger = LoggerFactory.getLogger(SvnCollector.class);
+
+    private String username = null;
+    private String password = null;
 
     @Autowired
     private MetricRepository metricRepository;
@@ -74,7 +74,21 @@ public class SvnCollector {
             return;
         }
 
-        SVNRepository repository = createRepository(properties, svnurl);
+
+        if (username == null || password == null) {
+            try {
+                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+
+                System.out.println("enter username: ");
+                username = bufferRead.readLine();
+                System.out.println("enter password: ");
+                password = bufferRead.readLine();
+            } catch (IOException e) {
+                new RuntimeException("fehlerhafte Eingabe");
+            }
+        }
+
+        SVNRepository repository = createRepository(username, password, svnurl);
         if (repository == null) {
             return;
         }
@@ -135,12 +149,13 @@ public class SvnCollector {
         return null;
     }
 
-    private SVNRepository createRepository(PropertyResourceBundle properties, SVNURL svnurl) {
+    private SVNRepository createRepository(String username, String password, SVNURL svnurl) {
         try {
             DAVRepositoryFactory.setup();
             SVNRepository repository = SVNRepositoryFactory.create(svnurl);
+
             ISVNAuthenticationManager authManager
-                    = SVNWCUtil.createDefaultAuthenticationManager(properties.getString(PARAM_USER_NAME), properties.getString(PARAM_PASSWORD));
+                    = SVNWCUtil.createDefaultAuthenticationManager(username, password);
             repository.setAuthenticationManager(authManager);
             return repository;
         } catch (SVNException ex) {
