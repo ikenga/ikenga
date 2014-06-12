@@ -186,7 +186,8 @@ public class SvnCollector {
                 }
             }
             for (Map.Entry<String, Long> entry : actions.entrySet()) {
-                MetricEntity metricData = new MetricEntity(date, author, entry.getKey(), entry.getValue(), logEntry.getMessage());
+                MetricEntity metricData = new MetricEntity(logEntry.getRevision(), date,
+                        author, entry.getKey(), entry.getValue(), logEntry.getMessage());
                 metricRepository.save(metricData);
             }
         }

@@ -1,12 +1,10 @@
 package me.ikenga.awarder;
 
-import org.apache.commons.lang3.time.DateUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -15,6 +13,7 @@ public class MetricEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    private long svnRevision;
     private Date date;
     private String userName;
     private String metricName;
@@ -24,9 +23,10 @@ public class MetricEntity {
     protected MetricEntity() {
     }
 
-    public MetricEntity(Date date, String userName, String metricName,
-            Long value, String message) {
-        this.date = DateUtils.truncate(date, Calendar.DATE);
+    public MetricEntity(long svnRevision, Date date, String userName, String metricName,
+                        Long value, String message) {
+        this.svnRevision = svnRevision;
+        this.date = date;
         this.userName = userName;
         this.metricName = metricName;
         this.value = value;
@@ -35,17 +35,25 @@ public class MetricEntity {
 
     // TODO: check if necessary, may be a good idea to use DTO class
     public MetricEntity(String userName, String metricName,
-            Long value) {
+                        Long value) {
         this.userName = userName;
         this.metricName = metricName;
         this.value = value;
+    }
+
+    public long getSvnRevision() {
+        return svnRevision;
+    }
+
+    public void setSvnRevision(long svnRevision) {
+        this.svnRevision = svnRevision;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public void setDay(Date date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
