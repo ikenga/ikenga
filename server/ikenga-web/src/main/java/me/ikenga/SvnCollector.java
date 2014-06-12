@@ -12,6 +12,7 @@ import me.ikenga.awarder.RevisionRepository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.wicket.util.crypt.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,9 @@ import org.tmatesoft.svn.core.wc.SVNLogClient;
 import org.tmatesoft.svn.core.wc.SVNRevision;
 import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,8 +46,6 @@ public class SvnCollector {
 
     private static final Logger logger = LoggerFactory.getLogger(SvnCollector.class);
 
-    private String username = null;
-    private String password = null;
 
     @Autowired
     private MetricRepository metricRepository;
@@ -74,21 +75,7 @@ public class SvnCollector {
             return;
         }
 
-
-        if (username == null || password == null) {
-            try {
-                BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
-
-                System.out.println("enter username: ");
-                username = bufferRead.readLine();
-                System.out.println("enter password: ");
-                password = bufferRead.readLine();
-            } catch (IOException e) {
-                new RuntimeException("fehlerhafte Eingabe");
-            }
-        }
-
-        SVNRepository repository = createRepository(username, password, svnurl);
+        SVNRepository repository = createRepository(properties, svnurl);
         if (repository == null) {
             return;
         }
@@ -149,13 +136,15 @@ public class SvnCollector {
         return null;
     }
 
-    private SVNRepository createRepository(String username, String password, SVNURL svnurl) {
+    private SVNRepository createRepository(PropertyResourceBundle properties, SVNURL svnurl) {
         try {
             DAVRepositoryFactory.setup();
             SVNRepository repository = SVNRepositoryFactory.create(svnurl);
 
+            byte[] decodedBytes = Base64.decodeBase64(properties.getString("password"));
+
             ISVNAuthenticationManager authManager
-                    = SVNWCUtil.createDefaultAuthenticationManager(username, password);
+                    = SVNWCUtil.createDefaultAuthenticationManager(properties.getString("username"), new String(decodedBytes));
             repository.setAuthenticationManager(authManager);
             return repository;
         } catch (SVNException ex) {
