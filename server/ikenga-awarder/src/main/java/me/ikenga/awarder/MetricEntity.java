@@ -30,7 +30,8 @@ public class MetricEntity {
         this.userName = userName;
         this.metricName = metricName;
         this.value = value;
-        this.message = message;
+        //Workaround for HSQLDB... maps String to VARCHAR(100) and fails when it is longer
+        this.message = message.length()<99 ? message : message.substring(0,99);
     }
 
     // TODO: check if necessary, may be a good idea to use DTO class
