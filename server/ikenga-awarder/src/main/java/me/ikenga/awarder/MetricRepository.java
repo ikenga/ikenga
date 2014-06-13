@@ -57,7 +57,7 @@ public interface MetricRepository extends
             "order by coun desc")
     List<Token> findMostCommits();
 
-    @Query("select new me.ikenga.api.token.Token('talkative', m.userName, avg(length(m.message)) as avglen, 'highest average message-length')" +
+    @Query("select new me.ikenga.api.token.Token('talkative', m.userName, round(avg(length(m.message))) as avglen, 'highest average message-length')" +
             "from MetricEntity as m " +
             "group by m.userName " +
             "order by avglen desc")
