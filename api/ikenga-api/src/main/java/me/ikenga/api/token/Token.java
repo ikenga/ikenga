@@ -8,11 +8,13 @@ public class Token {
     String tokenname;
     String owner;
     String value;
+    String description;
 
-    public Token(String tokenname, String owner, Object value) {
+    public Token(String tokenname, String owner, Object value, String description) {
         this.tokenname = tokenname;
         this.value = value.toString();
         this.owner = owner;
+        this.description = description;
     }
 
     public String getTokenname() {
@@ -39,4 +41,11 @@ public class Token {
         this.value = value.toString();
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

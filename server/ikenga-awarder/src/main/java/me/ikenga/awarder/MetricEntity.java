@@ -1,10 +1,7 @@
 package me.ikenga.awarder;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -18,6 +15,7 @@ public class MetricEntity {
     private String userName;
     private String metricName;
     private Long value;
+    @Column(length = 2000)
     private String message;
 
     protected MetricEntity() {
@@ -30,8 +28,8 @@ public class MetricEntity {
         this.userName = userName;
         this.metricName = metricName;
         this.value = value;
-        //Workaround for HSQLDB... maps String to VARCHAR(100) and fails when it is longer
-        this.message = message.length()<99 ? message : message.substring(0,99);
+        //TODO Workaround. längeren messages sollten anders behandelt werden als abschneiden
+        this.message = message.length()<1999 ? message : message.substring(0,1999);
     }
 
     // TODO: check if necessary, may be a good idea to use DTO class

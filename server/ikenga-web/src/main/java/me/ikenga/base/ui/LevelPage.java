@@ -52,18 +52,18 @@ public class LevelPage extends DashboardPage {
                     @Override
                     protected void populateItem(ListItem<MetricValue> item) {
                         MetricValue metric = item.getModelObject();
-                        final int progress = metric.getValue().intValue();
                         item.add(new Label("metricName", metric.getMetric().getIdentifier()));
-
                         WebMarkupContainer metricProgress = new WebMarkupContainer("metricProgress");
                         metricProgress.add(new AttributeAppender("style", String.format("width: %s%%", metric.getValue().intValue() % 100)));
+                        metricProgress.add(new AttributeAppender("class", getColor(metric.getValue() / 100l)));
                         item.add(metricProgress);
-                        item.add(new Label("metricLevel", getLeveldescription(metric.getMetric().getIdentifier(), metric.getValue() / 100l)));
+                        item.add(new Label("metricLevel", getLeveldescription(metric.getMetric().getIdentifier(), metric.getValue() / 100)));
                         item.add(new Label("metricValue", metric.getValue()));
                     }
                 });
                 
             }
+
             /**
              * CSC-like solution for Proof of Concept only! needs refactoring!
              */
@@ -83,6 +83,8 @@ public class LevelPage extends DashboardPage {
                             return leveldescription + " - Addicted";
                         case 4:
                             return leveldescription + " - Addministrator";
+                        default:
+                            return leveldescription + " - Add Lord";
                     }
                 }
                 if (identifier.equals("SvnDeleteCount")) {
@@ -97,6 +99,8 @@ public class LevelPage extends DashboardPage {
                             return leveldescription + " - Devastator";
                         case 4:
                             return leveldescription + " - badass Killer";
+                        default:
+                            return leveldescription + " - Remove Lord";
                     }
                 }
                 if (identifier.equals("SvnModifyCount")) {
@@ -111,9 +115,29 @@ public class LevelPage extends DashboardPage {
                             return leveldescription + " - Caterpillar";
                         case 4:
                             return leveldescription + " - Revoluzz0r";
+                        default:
+                            return leveldescription + " - Modify Lord";
                     }
                 }
                 return null;
+            }
+
+            private String getColor(long l){
+
+                switch ((int) l) {
+                    case 0:
+                        return " progress-bar-light-blue";
+                    case 1:
+                        return " progress-bar-aqua";
+                    case 2:
+                        return " progress-bar-green";
+                    case 3:
+                        return " progress-bar-yellow";
+                    case 4:
+                        return " progress-bar-red";
+                    default:
+                        return " progress-bar-red";
+                }
             }
         });
 

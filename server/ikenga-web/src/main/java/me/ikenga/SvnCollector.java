@@ -22,16 +22,12 @@ import org.springframework.stereotype.Component;
 import org.tmatesoft.svn.core.*;
 import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
 import org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory;
+import org.tmatesoft.svn.core.internal.util.SVNURLUtil;
 import org.tmatesoft.svn.core.io.SVNRepository;
 import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
-import org.tmatesoft.svn.core.wc.SVNClientManager;
-import org.tmatesoft.svn.core.wc.SVNLogClient;
-import org.tmatesoft.svn.core.wc.SVNRevision;
-import org.tmatesoft.svn.core.wc.SVNWCUtil;
+import org.tmatesoft.svn.core.wc.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +59,8 @@ public class SvnCollector {
     private final static String SEPARATOR = "=\n";
     private final static String CONFIG = PARAM_USER_NAME + SEPARATOR + PARAM_PASSWORD + SEPARATOR + PARAM_PROTOCOL + SEPARATOR + PARAM_HOST + SEPARATOR + PARAM_PORT + SEPARATOR + PARAM_PATH + SEPARATOR;
 
+    SVNURL svnurl;
+
     @Scheduled(fixedDelay = 20000)
     public void run() {
         PropertyResourceBundle properties = getProperties();
@@ -70,7 +68,7 @@ public class SvnCollector {
             return;
         }
 
-        SVNURL svnurl = createSvnUrl(properties);
+        svnurl = createSvnUrl(properties);
         if (svnurl == null) {
             return;
         }
@@ -82,6 +80,7 @@ public class SvnCollector {
 
         logger.debug("searching for new revisions");
         SVNLogClient logClient = SVNClientManager.newInstance().getLogClient();
+
         try {
 
             RevisionEntity latestProcessedRevision = getLatestProcessedRevision(svnurl);
@@ -92,6 +91,7 @@ public class SvnCollector {
             if (!fromRevision.equals(headRevision)) {
                 logClient.doLog(svnurl, null, SVNRevision.HEAD, fromRevision,
                         SVNRevision.HEAD, false, true, true, 0, null, new LogEntryHandler());
+
                 latestProcessedRevision.setRevision(headRevision.getNumber());
                 latestProcessedRevisionRepository.save(latestProcessedRevision);
             }
@@ -157,7 +157,7 @@ public class SvnCollector {
         RevisionEntity latestProcessedRevision = latestProcessedRevisionRepository.findByHostAndPath(svnurl.getHost(), svnurl.getPath());
         if (latestProcessedRevision == null) {
             latestProcessedRevision = new RevisionEntity();
-            latestProcessedRevision.setRevision(5700l);
+            latestProcessedRevision.setRevision(5796l);
             latestProcessedRevision.setHost(svnurl.getHost());
             latestProcessedRevision.setPath(svnurl.getPath());
         }
@@ -194,6 +194,26 @@ public class SvnCollector {
                         author, entry.getKey(), entry.getValue(), logEntry.getMessage());
                 metricRepository.save(metricData);
             }
+
+            //TODO DIFFS
+//            try {
+//                SVNDiffClient diffClient = SVNClientManager.newInstance().getDiffClient();
+//                FileOutputStream f = new FileOutputStream("c:/users/schiller/diff.txt");
+//
+//                for (String key : logEntry.getChangedPaths().keySet()){
+//                    SVNURL url1 = SVNURL.parseURIEncoded(svnurl.toDecodedString());
+//                    SVNURL url2 = SVNURL.parseURIEncoded(svnurl.toDecodedString());
+//                    url1 = SVNURL.parseURIEncoded(url1.appendPath(logEntry.getChangedPaths().get(key).getPath(),true).toDecodedString().replace("/trunk/trunk", "/trunk"));
+//                    url2 = SVNURL.parseURIEncoded(url2.appendPath(logEntry.getChangedPaths().get(key).getCopyPath(),true).toDecodedString().replace("/trunk/trunk", "/trunk"));
+//                    diffClient.doDiff(url1,SVNRevision.create(logEntry.getRevision()),url2,SVNRevision.create(logEntry.getRevision()+1),SVNDepth.FILES,true,f);
+//                }
+//
+//
+//                f.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+
         }
 
         private void addAction(Map<String, Long> actions, String action) {

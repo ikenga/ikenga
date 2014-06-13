@@ -8,7 +8,7 @@ package me.ikenga.base.ui;
 
 import me.ikenga.api.token.Token;
 import me.ikenga.awarder.MetricRepository;
-import me.ikenga.base.ui.panel.TokenPanel;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -33,15 +33,20 @@ public class TokenPage extends DashboardPage {
 
         List<Token> tokenList = new ArrayList<>();
 
-//        tokenList.add(metricRepository.findBiggestCommit());
         tokenList.add(metricRepository.findEarliestCommit());
         tokenList.add(metricRepository.findLatestCommit());
+        tokenList.add(metricRepository.findBiggestCommit().get(0));
+        tokenList.add(metricRepository.findMostCommits().get(0));
+        tokenList.add(metricRepository.findLongestAvgMessageLen().get(0));
 
-        add(new ListView<Token>("tokenList", tokenList) {
-            // This method is called for each 'entry' in the list.
+        add(new ListView<Token>("tokenMetrics", tokenList) {
             @Override
-            protected void populateItem(ListItem item) {
-                item.add(new TokenPanel("tokenPanel", (Token) item.getModelObject()));
+            protected void populateItem(ListItem<Token> item) {
+                Token token = item.getModelObject();
+                item.add(new Label("tokenname", token.getTokenname()));
+                item.add(new Label("user", token.getOwner()));
+                item.add(new Label("value", token.getValue()));
+                item.add(new Label("description", token.getDescription()));
             }
         });
     }
