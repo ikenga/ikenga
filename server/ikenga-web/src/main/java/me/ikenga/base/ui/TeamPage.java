@@ -7,6 +7,7 @@
 package me.ikenga.base.ui;
 
 import me.ikenga.awarder.MetricRepository;
+import me.ikenga.base.ui.panel.TeamMetricHighscorePanel;
 import me.ikenga.base.ui.panel.UserMetricHighscorePanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
@@ -19,25 +20,25 @@ import org.slf4j.LoggerFactory;
 /**
  * @author kloe
  */
-public class HighscoresPage extends DashboardPage {
+public class TeamPage extends DashboardPage {
 
-    private static final Logger logger = LoggerFactory.getLogger(HighscoresPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(TeamPage.class);
 
     @SpringBean
     private MetricRepository metricRepository;
 
-    public HighscoresPage(final PageParameters parameters) {
+    public TeamPage(final PageParameters parameters) {
 
         add(new Label("overallLabel", Model.of("Overall Highscore")));
-        add(new UserMetricHighscorePanel("overallListPanel", metricRepository.findOverallPoints()));
+        add(new TeamMetricHighscorePanel("overallListPanel", metricRepository.findOverallTeamPoints()));
         add(new Label("addLabel", Model.of("Add Highscore")));
-        add(new UserMetricHighscorePanel("addListPanel", "SvnAddCount"));
+        add(new TeamMetricHighscorePanel("addListPanel", "SvnAddCount"));
         add(new Label("remLabel", Model.of("Remove Highscore")));
-        add(new UserMetricHighscorePanel("remListPanel", "SvnDeleteCount"));
+        add(new TeamMetricHighscorePanel("remListPanel", "SvnDeleteCount"));
         add(new Label("updLabel", Model.of("Update Highscore")));
-        add(new UserMetricHighscorePanel("updListPanel", "SvnModifyCount"));
+        add(new TeamMetricHighscorePanel("updListPanel", "SvnModifyCount"));
         add(new Label("replaceLabel", Model.of("Replace Highscore")));
-        add(new UserMetricHighscorePanel("replaceListPanel", "SvnReplaceCount"));
+        add(new TeamMetricHighscorePanel("replaceListPanel", "SvnReplaceCount"));
 
     }
 

@@ -191,7 +191,7 @@ public class SvnCollector {
             }
             for (Map.Entry<String, Long> entry : actions.entrySet()) {
                 MetricEntity metricData = new MetricEntity(logEntry.getRevision(), date,
-                        author, entry.getKey(), entry.getValue(), logEntry.getMessage());
+                        author, getTeam(author), entry.getKey(), entry.getValue(), logEntry.getMessage());
                 metricRepository.save(metricData);
             }
 
@@ -216,6 +216,25 @@ public class SvnCollector {
 
         }
 
+        private String getTeam(String author) {
+            switch (author) {
+                case "kuksin":
+                case "kmueller":
+                case "hombergs":
+                case "schiller":
+                case "terstiege":
+                    return "Ost";
+                case "zuber":
+                case "schoemer":
+                case "kloe":
+                case "jdeponte":
+                    return "West";
+                default:
+                    return "unknown";
+            }
+
+        }
+
         private void addAction(Map<String, Long> actions, String action) {
             if (actions.containsKey(action)) {
                 actions.put(action, actions.get(action) + 1);
@@ -225,5 +244,7 @@ public class SvnCollector {
         }
 
     }
+
+
 
 }

@@ -13,6 +13,7 @@ public class MetricEntity {
     private long svnRevision;
     private Date date;
     private String userName;
+    private String team;
     private String metricName;
     private Long value;
     @Column(length = 2000)
@@ -21,11 +22,12 @@ public class MetricEntity {
     protected MetricEntity() {
     }
 
-    public MetricEntity(long svnRevision, Date date, String userName, String metricName,
+    public MetricEntity(long svnRevision, Date date, String userName,String team, String metricName,
                         Long value, String message) {
         this.svnRevision = svnRevision;
         this.date = date;
         this.userName = userName;
+        this.team = team;
         this.metricName = metricName;
         this.value = value;
         //TODO Workaround. längeren messages sollten anders behandelt werden als abschneiden
@@ -62,6 +64,14 @@ public class MetricEntity {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
 
     public String getMetricName() {

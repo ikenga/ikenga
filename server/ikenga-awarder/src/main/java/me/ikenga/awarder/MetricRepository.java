@@ -17,6 +17,7 @@ public interface MetricRepository extends
     @Query("select distinct userName from MetricEntity")
     List<String> findUserNames();
 
+
     @Query("select new me.ikenga.api.metrics.MetricValue(m.metricName, m.userName, sum(m.value)) "
             + "from MetricEntity m "
             + "where m.userName = :userName "
@@ -24,11 +25,24 @@ public interface MetricRepository extends
             + "order by m.metricName, sum(m.value) desc")
     List<MetricValue> findHighestValuesByUserName(@Param("userName") String userName);
 
+    @Query("select new me.ikenga.api.metrics.MetricValue(m.metricName, m.team, sum(m.value)) "
+            + "from MetricEntity m "
+            + "where m.metricName = :metric "
+            + "group by m.team, m.metricName "
+            + "order by m.metricName, sum(m.value) desc")
+    List<MetricValue> findTeamHigscoresByMetric(@Param("metric") String metric);
+
     @Query("select new me.ikenga.api.metrics.MetricValue('overall points', m.userName, sum(m.value)) "
             + "from MetricEntity m "
             + "group by m.userName "
             + "order by sum(m.value) desc")
     List<MetricValue> findOverallPoints();
+
+    @Query("select new me.ikenga.api.metrics.MetricValue('overall points', m.team, sum(m.value)) "
+            + "from MetricEntity m "
+            + "group by m.team "
+            + "order by sum(m.value) desc")
+    List<MetricValue> findOverallTeamPoints();
 
     @Query("select new me.ikenga.api.metrics.MetricValue(m.metricName, m.userName, sum(m.value)) "
             + "from MetricEntity m "
@@ -62,6 +76,9 @@ public interface MetricRepository extends
             "group by m.userName " +
             "order by avglen desc")
     List<Token> findLongestAvgMessageLen();
+
+
+
 
 
 }
