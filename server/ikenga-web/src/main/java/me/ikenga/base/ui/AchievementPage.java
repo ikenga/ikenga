@@ -8,6 +8,8 @@ package me.ikenga.base.ui;
 
 import me.ikenga.api.metrics.MetricValue;
 import me.ikenga.awarder.MetricRepository;
+import org.apache.wicket.behavior.AttributeAppender;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -17,20 +19,18 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.wicket.behavior.AttributeAppender;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 
 /**
  * @author kloe
  */
-public class LevelPage extends DashboardPage {
+public class AchievementPage extends DashboardPage {
 
-    private static final Logger logger = LoggerFactory.getLogger(LevelPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(AchievementPage.class);
 
     @SpringBean
     private MetricRepository metricRepository;
 
-    public LevelPage() {
+    public AchievementPage() {
         List<String> nameList = metricRepository.findUserNames();
         List<List<MetricValue>> metricsList = new ArrayList<>();
 

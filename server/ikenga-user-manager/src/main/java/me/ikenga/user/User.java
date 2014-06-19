@@ -15,8 +15,13 @@ public class User {
     @Column(unique = true, nullable = false)
     private String username;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String hashedPassword;
+
+    public User(String username) {
+        this.username = username;
+        this.email = username + "@adesso.de";
+    }
 
     public long getId() {
         return id;

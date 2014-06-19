@@ -23,7 +23,7 @@ public interface MetricRepository extends
             + "where m.userName = :userName "
             + "group by m.userName, m.metricName "
             + "order by m.metricName, sum(m.value) desc")
-    List<MetricValue> findHighestValuesByUserName(@Param("userName") String userName);
+    List<MetricValue> findSumValuesByUserName(@Param("userName") String userName);
 
     @Query("select new me.ikenga.api.metrics.MetricValue(m.metricName, m.team, sum(m.value)) "
             + "from MetricEntity m "

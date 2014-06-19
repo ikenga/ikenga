@@ -9,6 +9,8 @@ import me.ikenga.awarder.MetricEntity;
 import me.ikenga.awarder.MetricRepository;
 import me.ikenga.awarder.RevisionEntity;
 import me.ikenga.awarder.RevisionRepository;
+import me.ikenga.user.User;
+import me.ikenga.user.UserRepository;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
@@ -22,12 +24,16 @@ import org.springframework.stereotype.Component;
 import org.tmatesoft.svn.core.*;
 import org.tmatesoft.svn.core.auth.ISVNAuthenticationManager;
 import org.tmatesoft.svn.core.internal.io.dav.DAVRepositoryFactory;
-import org.tmatesoft.svn.core.internal.util.SVNURLUtil;
 import org.tmatesoft.svn.core.io.SVNRepository;
 import org.tmatesoft.svn.core.io.SVNRepositoryFactory;
-import org.tmatesoft.svn.core.wc.*;
+import org.tmatesoft.svn.core.wc.SVNClientManager;
+import org.tmatesoft.svn.core.wc.SVNLogClient;
+import org.tmatesoft.svn.core.wc.SVNRevision;
+import org.tmatesoft.svn.core.wc.SVNWCUtil;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,12 +55,16 @@ public class SvnCollector {
     @Autowired
     private RevisionRepository latestProcessedRevisionRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
     private final static String PARAM_USER_NAME = "username";
     private final static String PARAM_PASSWORD = "password";
     private final static String PARAM_PROTOCOL = "protocol";
     private final static String PARAM_HOST = "host";
     private final static String PARAM_PORT = "port";
     private final static String PARAM_PATH = "path";
+    private final static String INITIAL_REVISION = "initialRevision";
 
     private final static String SEPARATOR = "=\n";
     private final static String CONFIG = PARAM_USER_NAME + SEPARATOR + PARAM_PASSWORD + SEPARATOR + PARAM_PROTOCOL + SEPARATOR + PARAM_HOST + SEPARATOR + PARAM_PORT + SEPARATOR + PARAM_PATH + SEPARATOR;
@@ -157,7 +167,7 @@ public class SvnCollector {
         RevisionEntity latestProcessedRevision = latestProcessedRevisionRepository.findByHostAndPath(svnurl.getHost(), svnurl.getPath());
         if (latestProcessedRevision == null) {
             latestProcessedRevision = new RevisionEntity();
-            latestProcessedRevision.setRevision(5796l);
+            latestProcessedRevision.setRevision(Long.valueOf(getProperties().getString(INITIAL_REVISION)));
             latestProcessedRevision.setHost(svnurl.getHost());
             latestProcessedRevision.setPath(svnurl.getPath());
         }
@@ -169,7 +179,7 @@ public class SvnCollector {
         @Override
         public void handleLogEntry(SVNLogEntry logEntry)
                 throws SVNException {
-            String author = logEntry.getAuthor();
+            User author = getUser(logEntry.getAuthor());
             Date date = logEntry.getDate();
             logger.debug(String.format("found revision %d from %s by %s", logEntry.getRevision(), date, author));
             Map<String, Long> actions = new HashMap<String, Long>();
@@ -245,6 +255,14 @@ public class SvnCollector {
 
     }
 
+    private User getUser(String author) {
+        User user = userRepository.findByUsername(author);
+        if(null==user){
+            user = new User(author);
+            userRepository.save(user);
+        }
+        return user;
+    }
 
 
 }

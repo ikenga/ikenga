@@ -9,7 +9,7 @@ public abstract class DashboardPage extends BasePage {
                 HighscoresPage.class));
         add(new BookmarkablePageLink<String>("linkLevels", LevelPage.class));
         add(new BookmarkablePageLink<String>("linkToken", TokenPage.class));
-        add(new BookmarkablePageLink<String>("linkUsers", UsersPage.class));
+        add(new BookmarkablePageLink<String>("linkUsers", UsersPage.class).setVisible(false));
         add(new BookmarkablePageLink<String>("linkTeam", TeamPage.class));
 
     }

@@ -1,6 +1,8 @@
 package me.ikenga.awarder;
 
 
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+
 import javax.persistence.*;
 import java.util.Date;
 

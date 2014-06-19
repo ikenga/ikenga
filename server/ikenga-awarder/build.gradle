@@ -4,6 +4,7 @@ apply plugin: 'java'
 dependencies {
     compile(
             libraries.ikengaModule,
-            project(":api:ikenga-api")
+            project(":api:ikenga-api"),
+            project(":server:ikenga-user-manager"),
     )
 }
