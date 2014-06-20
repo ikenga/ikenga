@@ -14,7 +14,14 @@ public interface UserRepository extends
 
     UserEntity findByUsername(String username);
 
+    @Query("select u.username from UserEntity u " +
+            "where u.team = :team")
+    List<String> findUsernamesByTeam(@Param("team") String team);
+
     UserEntity findByEmail(String email);
+
+    @Query("select distinct u.team from UserEntity u")
+    List<String> findDistinctTeams();
 
     @Query("select u from UserEntity u "
             + "where (u.username = :usernameOrEmail "

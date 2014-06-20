@@ -34,7 +34,7 @@ public class UserMetricHighscorePanel extends Panel{
     public UserMetricHighscorePanel(String id, String metric) {
         super(id);
 
-        add(new ListView<MetricValue>("list", metricRepository.findHighestValuesByMetric(metric)) {
+        add(new ListView<MetricValue>("list", metricRepository.findSumValuesByMetric(metric)) {
             // This method is called for each 'entry' in the list.
             @Override protected void populateItem(ListItem item) {
                 MetricValue values = (MetricValue)item.getModelObject();

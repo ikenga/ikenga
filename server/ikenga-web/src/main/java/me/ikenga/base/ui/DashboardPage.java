@@ -11,6 +11,7 @@ public abstract class DashboardPage extends BasePage {
         add(new BookmarkablePageLink<String>("linkToken", TokenPage.class));
         add(new BookmarkablePageLink<String>("linkUsers", UsersPage.class).setVisible(false));
         add(new BookmarkablePageLink<String>("linkTeam", TeamPage.class));
+        add(new BookmarkablePageLink<String>("linkAchievement", AchievementPage.class));
 
     }
 

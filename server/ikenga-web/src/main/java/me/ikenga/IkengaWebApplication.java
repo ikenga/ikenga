@@ -72,12 +72,13 @@ public class IkengaWebApplication extends WebApplication {
 
         getSecuritySettings().setAuthorizationStrategy(getAuthorizationStrategy());
 
-        mountPage("/highscores", HighscoresPage.class);
+        mountPage("/highscore", HighscoresPage.class);
         mountPage("/users", UsersPage.class);
         mountPage("/register", RegistrationPage.class);
         mountPage("/login", LoginPage.class);
         mountPage("/level", LevelPage.class);
         mountPage("/token", TokenPage.class);
+        mountPage("/achievement", AchievementPage.class);
         mountPage("/error403", ErrorPage403.class);
         mountPage("/error404", ErrorPage404.class);
         mountPage("/error500", ErrorPage500.class);

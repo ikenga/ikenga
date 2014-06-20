@@ -38,6 +38,7 @@ public class TokenPage extends DashboardPage {
         tokenList.add(metricRepository.findBiggestCommit().get(0));
         tokenList.add(metricRepository.findMostCommits().get(0));
         tokenList.add(metricRepository.findLongestAvgMessageLen().get(0));
+        tokenList.add(metricRepository.findMostCommitsOnOneDay().get(0));
 
         add(new ListView<Token>("tokenMetrics", tokenList) {
             @Override
