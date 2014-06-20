@@ -1,21 +1,21 @@
-package me.ikenga.awarder;
+package me.ikenga.persistence.entity;
 
-
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class MetricEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     private long svnRevision;
     private Date date;
-    private String userName;
-    private String team;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private UserEntity user;
+
     private String metricName;
     private Long value;
     @Column(length = 2000)
@@ -24,12 +24,11 @@ public class MetricEntity {
     protected MetricEntity() {
     }
 
-    public MetricEntity(long svnRevision, Date date, String userName,String team, String metricName,
+    public MetricEntity(long svnRevision, Date date, UserEntity user, String metricName,
                         Long value, String message) {
         this.svnRevision = svnRevision;
         this.date = date;
-        this.userName = userName;
-        this.team = team;
+        this.user = user;
         this.metricName = metricName;
         this.value = value;
         //TODO Workaround. längeren messages sollten anders behandelt werden als abschneiden
@@ -37,11 +36,19 @@ public class MetricEntity {
     }
 
     // TODO: check if necessary, may be a good idea to use DTO class
-    public MetricEntity(String userName, String metricName,
+    public MetricEntity(UserEntity user, String metricName,
                         Long value) {
-        this.userName = userName;
+        this.user = user;
         this.metricName = metricName;
         this.value = value;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public long getSvnRevision() {
@@ -60,20 +67,12 @@ public class MetricEntity {
         this.date = date;
     }
 
-    public String getUserName() {
-        return userName;
+    public UserEntity getUser() {
+        return user;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getTeam() {
-        return team;
-    }
-
-    public void setTeam(String team) {
-        this.team = team;
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public String getMetricName() {
@@ -102,7 +101,7 @@ public class MetricEntity {
 
     @Override
     public String toString() {
-        return String.format("%s has %d in %s on %s", userName, value,
+        return String.format("%s has %d in %s on %s", user, value,
                 metricName, date);
     }
 

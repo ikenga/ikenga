@@ -1,7 +1,7 @@
-package me.ikenga.api.achievements;
+package me.ikenga.api.feedback.achievements;
 
-import me.ikenga.api.metrics.Metric;
-import me.ikenga.api.metrics.MetricValue;
+import me.ikenga.api.feedback.metrics.Metric;
+import me.ikenga.api.feedback.metrics.MetricValue;
 
 import java.util.List;
 

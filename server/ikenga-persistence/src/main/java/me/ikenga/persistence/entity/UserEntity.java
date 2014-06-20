@@ -1,13 +1,14 @@
-package me.ikenga.user;
+package me.ikenga.persistence.entity;
 
 import javax.persistence.*;
 
 @Entity
-public class User {
+@Table(uniqueConstraints = {@UniqueConstraint(name = "USERENTITY_USERNAME",columnNames = {"username"})})
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -18,16 +19,21 @@ public class User {
     @Column(nullable = true)
     private String hashedPassword;
 
-    public User(String username) {
+    private String team;
+
+    public UserEntity() {
+    }
+
+    public UserEntity(String username) {
         this.username = username;
         this.email = username + "@adesso.de";
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,5 +59,13 @@ public class User {
 
     public void setHashedPassword(String hashedPassword) {
         this.hashedPassword = hashedPassword;
+    }
+
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
     }
 }

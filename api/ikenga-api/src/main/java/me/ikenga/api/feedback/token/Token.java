@@ -1,4 +1,4 @@
-package me.ikenga.api.token;
+package me.ikenga.api.feedback.token;
 
 /**
  * Created by schiller on 09.06.2014.

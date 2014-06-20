@@ -3,10 +3,7 @@ package me.ikenga.server.plugins;
 import me.ikenga.api.plugins.AchievementPlugin;
 import me.ikenga.api.plugins.CollectorPlugin;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceLoader;
+import java.util.*;
 
 /**
  * Central class for accessing all ikenga plugins registered within the JVM.
@@ -31,12 +28,12 @@ public class PluginManager {
 
     @SuppressWarnings("unchecked")
     public <P> List<P> getPlugins(Class<P> pluginClass) {
-        ServiceLoader loader = ServiceLoader.load(pluginClass);
         List<P> resultList = new ArrayList<>();
-        Iterator<P> iterator = (Iterator<P>) loader.iterator();
-        while (iterator.hasNext()) {
-            resultList.add(iterator.next());
+
+        for (P p : ServiceLoader.load(pluginClass)) {
+            resultList.add(p);
         }
+
         return resultList;
     }
 

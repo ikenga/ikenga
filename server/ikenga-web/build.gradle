@@ -16,9 +16,9 @@ dependencies {
             "org.hsqldb:hsqldb:2.3.2",
             "org.apache.commons:commons-lang3:3.3.2",
             "org.hibernate:hibernate-validator:5.1.1.Final",
-            project(":server:ikenga-awarder"),
+            project(":server:ikenga-persistence"),
             project(":server:ikenga-user-manager"),
-            "org.tmatesoft.svnkit:svnkit:1.8.5",
+            project(":plugins:ikenga-default-collector"),
             "commons-io:commons-io:2.4",
     )
 

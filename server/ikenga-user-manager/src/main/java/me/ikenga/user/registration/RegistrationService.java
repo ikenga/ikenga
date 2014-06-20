@@ -1,8 +1,8 @@
 package me.ikenga.user.registration;
 
 import me.ikenga.user.PasswordHasher;
-import me.ikenga.user.User;
-import me.ikenga.user.UserRepository;
+import me.ikenga.persistence.entity.UserEntity;
+import me.ikenga.persistence.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,26 +32,25 @@ public class RegistrationService {
             throw new EmailAlreadyExistsException();
         }
 
-        User user = mapRegistrationData(registrationData);
+        UserEntity user = mapRegistrationData(registrationData);
         userRepository.save(user);
 
     }
 
-    private User mapRegistrationData(RegistrationData registrationData) {
-        User user = new User();
+    private UserEntity mapRegistrationData(RegistrationData registrationData) {
+        UserEntity user = new UserEntity(registrationData.getUsername());
         user.setHashedPassword(passwordHasher.hashPassword(registrationData.getPassword()));
-        user.setUsername(registrationData.getUsername());
         user.setEmail(registrationData.getEmail());
         return user;
     }
 
     private boolean usernameExists(String username) {
-        User user = userRepository.findByUsername(username);
+        UserEntity user = userRepository.findByUsername(username);
         return user != null;
     }
 
     private boolean emailExists(String email) {
-        User user = userRepository.findByEmail(email);
+        UserEntity user = userRepository.findByEmail(email);
         return user != null;
     }
 }

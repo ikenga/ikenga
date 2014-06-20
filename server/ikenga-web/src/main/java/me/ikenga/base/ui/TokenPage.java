@@ -6,8 +6,8 @@
 
 package me.ikenga.base.ui;
 
-import me.ikenga.api.token.Token;
-import me.ikenga.awarder.MetricRepository;
+import me.ikenga.api.feedback.token.Token;
+import me.ikenga.persistence.repository.MetricRepository;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;

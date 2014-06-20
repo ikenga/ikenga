@@ -1,8 +1,8 @@
 package me.ikenga.user.login;
 
 import me.ikenga.BaseTest;
-import me.ikenga.user.User;
-import me.ikenga.user.UserRepository;
+import me.ikenga.persistence.entity.UserEntity;
+import me.ikenga.persistence.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -55,11 +55,10 @@ public class LoginServiceTest extends BaseTest {
         return credentials;
     }
 
-    private User createLoggedInUser() {
-        User user = new User();
+    private UserEntity createLoggedInUser() {
+        UserEntity user = new UserEntity("tom");
         user.setEmail("tom@ikenga.me");
         user.setHashedPassword("123");
-        user.setUsername("tom");
         user.setId(1l);
         return user;
     }

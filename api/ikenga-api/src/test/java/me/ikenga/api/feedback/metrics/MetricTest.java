@@ -1,4 +1,4 @@
-package me.ikenga.api.metrics;
+package me.ikenga.api.feedback.metrics;
 
 import org.junit.Assert;
 import org.junit.Test;

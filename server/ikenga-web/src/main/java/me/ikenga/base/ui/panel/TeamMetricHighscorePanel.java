@@ -1,7 +1,7 @@
 package me.ikenga.base.ui.panel;
 
-import me.ikenga.api.metrics.MetricValue;
-import me.ikenga.awarder.MetricRepository;
+import me.ikenga.api.feedback.metrics.MetricValue;
+import me.ikenga.persistence.repository.MetricRepository;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -25,7 +25,7 @@ public class TeamMetricHighscorePanel extends Panel{
             // This method is called for each 'entry' in the list.
             @Override protected void populateItem(ListItem item) {
                 MetricValue values = (MetricValue)item.getModelObject();
-                item.add(new Label("team", values.getUserId()));
+                item.add(new Label("team", values.getOwner()));
                 item.add(new Label("value", values.getValue()));
             }
         });
@@ -38,7 +38,7 @@ public class TeamMetricHighscorePanel extends Panel{
             // This method is called for each 'entry' in the list.
             @Override protected void populateItem(ListItem item) {
                 MetricValue values = (MetricValue)item.getModelObject();
-                item.add(new Label("team", values.getUserId()));
+                item.add(new Label("team", values.getOwner()));
                 item.add(new Label("value", values.getValue()));
             }
         });

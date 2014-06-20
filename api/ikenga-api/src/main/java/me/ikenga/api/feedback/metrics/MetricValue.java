@@ -1,4 +1,4 @@
-package me.ikenga.api.metrics;
+package me.ikenga.api.feedback.metrics;
 
 /**
  * Basic class to count values for a given Metric.
@@ -9,31 +9,33 @@ public class MetricValue {
 
     private Metric metric;
 
-    private String userId;
+    private String owner;
 
     private Long value;
+
 
     /**
      * Initializing constructor.
      *
      * @param metric the Metric for which to count a value.
-     * @param userId identifier of the user for which the metric is counted.
+     * @param owner  user or group for which the metric is counted.
      * @param value  the initial value of the metric.
      */
-    public MetricValue(Metric metric, String userId, Long value) {
-        if (metric == null || userId == null || value == null) {
+    public MetricValue(Metric metric, String owner, Long value) {
+        if (metric == null || owner == null || value == null) {
             throw new NullPointerException("input parameters may not be null!");
         }
-        this.userId = userId;
+        this.owner = owner;
         this.metric = metric;
         this.value = value;
     }
-    
-        public MetricValue(String metric, String userId, Long value) {
-        if (metric == null || userId == null || value == null) {
+
+
+    public MetricValue(String metric, String owner, Long value) {
+        if (metric == null || owner == null || value == null) {
             throw new NullPointerException("input parameters may not be null!");
         }
-        this.userId = userId;
+        this.owner = owner;
         this.metric = new Metric(metric);
         this.value = value;
     }
@@ -42,10 +44,10 @@ public class MetricValue {
      * Initializing constructor.
      *
      * @param metric the Metric for which to count a value.
-     * @param userId identifier of the user for which the metric is counted.
+     * @param owner  identifier of the user for which the metric is counted.
      */
-    public MetricValue(Metric metric, String userId) {
-        if (metric == null || userId == null) {
+    public MetricValue(Metric metric, String owner) {
+        if (metric == null || owner == null) {
             throw new NullPointerException("input values may not be null!");
         }
         this.metric = metric;
@@ -68,7 +70,7 @@ public class MetricValue {
         return this.metric;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getOwner() {
+        return owner;
     }
 }

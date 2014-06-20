@@ -1,4 +1,4 @@
-package me.ikenga.awarder;
+package me.ikenga.persistence.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

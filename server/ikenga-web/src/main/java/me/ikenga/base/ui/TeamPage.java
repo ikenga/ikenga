@@ -6,9 +6,8 @@
 
 package me.ikenga.base.ui;
 
-import me.ikenga.awarder.MetricRepository;
+import me.ikenga.persistence.repository.MetricRepository;
 import me.ikenga.base.ui.panel.TeamMetricHighscorePanel;
-import me.ikenga.base.ui.panel.UserMetricHighscorePanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;

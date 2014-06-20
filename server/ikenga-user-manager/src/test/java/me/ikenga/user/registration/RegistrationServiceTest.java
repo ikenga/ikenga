@@ -1,8 +1,8 @@
 package me.ikenga.user.registration;
 
 import me.ikenga.BaseTest;
-import me.ikenga.user.User;
-import me.ikenga.user.UserRepository;
+import me.ikenga.persistence.entity.UserEntity;
+import me.ikenga.persistence.repository.UserRepository;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -31,14 +31,14 @@ public class RegistrationServiceTest extends BaseTest {
         registrationService.register(data);
 
         // then
-        verify(userRepository).save(any(User.class));
+        verify(userRepository).save(any(UserEntity.class));
     }
 
     @Test(expected = UsernameAlreadyExistsException.class)
     public void testRegisterUsernameExists() {
         // given
         RegistrationData data = createDummyRegistrationData();
-        when(userRepository.findByUsername(data.getUsername())).thenReturn(new User());
+        when(userRepository.findByUsername(data.getUsername())).thenReturn(new UserEntity("tom"));
         when(userRepository.findByEmail(data.getEmail())).thenReturn(null);
 
         // when
@@ -53,7 +53,7 @@ public class RegistrationServiceTest extends BaseTest {
         // given
         RegistrationData data = createDummyRegistrationData();
         when(userRepository.findByUsername(data.getUsername())).thenReturn(null);
-        when(userRepository.findByEmail(data.getEmail())).thenReturn(new User());
+        when(userRepository.findByEmail(data.getEmail())).thenReturn(new UserEntity("?"));
 
         // when
         registrationService.register(data);

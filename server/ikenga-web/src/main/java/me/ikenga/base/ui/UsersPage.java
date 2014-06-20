@@ -2,9 +2,11 @@ package me.ikenga.base.ui;
 
 import java.util.List;
 
-import me.ikenga.awarder.MetricEntity;
-import me.ikenga.awarder.MetricRepository;
+import me.ikenga.persistence.entity.MetricEntity;
+import me.ikenga.persistence.entity.UserEntity;
+import me.ikenga.persistence.repository.MetricRepository;
 
+import me.ikenga.persistence.repository.UserRepository;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -20,16 +22,19 @@ public class UsersPage extends DashboardPage {
     @SpringBean
     private MetricRepository metricRepository;
 
+    @SpringBean
+    private UserRepository userRepository;
+
     public UsersPage() {
-        List<MetricEntity> metricsList = metricRepository
-                .findByUserName("kloe");
-        add(new ListView<MetricEntity>("userList", metricsList) {
+        UserEntity user = userRepository.findByUsername("kloe");
+
+        add(new ListView<MetricEntity>("userList", metricRepository.findByUser(user)) {
 
             @Override
             protected void populateItem(ListItem<MetricEntity> item) {
                 MetricEntity data = item.getModelObject();
                 logger.info("processing metric data: " + data.toString());
-                item.add(new Label("name", data.getUserName()));
+                item.add(new Label("name", data.getUser().getUsername()));
                 item.add(new Label("metric", data.getMetricName()));
                 item.add(new Label("value", data.getValue()));
             }

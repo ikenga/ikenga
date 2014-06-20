@@ -6,8 +6,10 @@
 
 package me.ikenga.base.ui;
 
-import me.ikenga.api.metrics.MetricValue;
-import me.ikenga.awarder.MetricRepository;
+import me.ikenga.api.feedback.metrics.MetricValue;
+import me.ikenga.persistence.repository.MetricRepository;
+import me.ikenga.persistence.entity.UserEntity;
+import me.ikenga.persistence.repository.UserRepository;
 import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -30,12 +32,14 @@ public class AchievementPage extends DashboardPage {
     @SpringBean
     private MetricRepository metricRepository;
 
+    @SpringBean
+    private UserRepository userRepository;
+
     public AchievementPage() {
-        List<String> nameList = metricRepository.findUserNames();
         List<List<MetricValue>> metricsList = new ArrayList<>();
 
-        for (String name : nameList) {
-            metricsList.add(metricRepository.findSumValuesByUserName(name));
+        for (UserEntity user : userRepository.findAll()) {
+            metricsList.add(metricRepository.findSumValuesByUserName(user));
         }
 
         add(new ListView<List<MetricValue>>("userBox", metricsList) {
@@ -45,7 +49,7 @@ public class AchievementPage extends DashboardPage {
                 logger.info(item + " -> " + item.getModelObject().getClass());
                 List<MetricValue> metric = item.getModelObject();
 
-                item.add(new Label("userName", metric.get(0).getUserId()));
+                item.add(new Label("userName", metric.get(0).getOwner()));
 
                 item.add(new ListView<MetricValue>("userMetrics", metric) {
                     @Override

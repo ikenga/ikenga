@@ -1,6 +1,8 @@
 package me.ikenga.user;
 
 import me.ikenga.BaseTest;
+import me.ikenga.persistence.entity.UserEntity;
+import me.ikenga.persistence.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,47 +15,47 @@ public class UserRepositoryTest extends BaseTest {
     @Test
     public void testFindByUsername() {
         // given
-        User user = createDummyUser();
+        UserEntity user = createDummyUser();
         user.setUsername("tom");
 
         // when
         userRepository.save(user);
 
         // then
-        User foundUser = userRepository.findByUsername("tom");
+        UserEntity foundUser = userRepository.findByUsername("tom");
         Assert.assertNotNull(foundUser);
     }
 
     @Test
     public void testFindByUsernameNull() {
-        User foundUser = userRepository.findByUsername("tom");
+        UserEntity foundUser = userRepository.findByUsername("tom");
         Assert.assertNull(foundUser);
     }
 
     @Test
     public void testFindByEmail() {
         // given
-        User user = createDummyUser();
+        UserEntity user = createDummyUser();
         user.setEmail("tom@ikenga.me");
 
         // when
         userRepository.save(user);
 
         // then
-        User foundUser = userRepository.findByEmail("tom@ikenga.me");
+        UserEntity foundUser = userRepository.findByEmail("tom@ikenga.me");
         Assert.assertNotNull(foundUser);
     }
 
     @Test
     public void testFindByEmailNull() {
-        User foundUser = userRepository.findByEmail("tom@ikenga.me");
+        UserEntity foundUser = userRepository.findByEmail("tom@ikenga.me");
         Assert.assertNull(foundUser);
     }
 
     @Test
     public void testFindByUsernameAndHashedPassword() {
         // given
-        User user = createDummyUser();
+        UserEntity user = createDummyUser();
         user.setUsername("tom");
         user.setHashedPassword("pw");
 
@@ -62,20 +64,20 @@ public class UserRepositoryTest extends BaseTest {
         userRepository.save(user);
 
         // then
-        User foundUser = userRepository.findByUsernameOrEmailAndHashedPassword("tom", "pw");
+        UserEntity foundUser = userRepository.findByUsernameOrEmailAndHashedPassword("tom", "pw");
         Assert.assertNotNull(foundUser);
     }
 
     @Test
     public void testFindByUsernameAndHashedPasswordNull() {
-        User foundUser = userRepository.findByUsernameOrEmailAndHashedPassword("tom", "pw");
+        UserEntity foundUser = userRepository.findByUsernameOrEmailAndHashedPassword("tom", "pw");
         Assert.assertNull(foundUser);
     }
 
     @Test
     public void testFindByEmailAndHashedPassword() {
         // given
-        User user = createDummyUser();
+        UserEntity user = createDummyUser();
         user.setEmail("tom@ikenga.me");
         user.setHashedPassword("pw");
 
@@ -84,18 +86,18 @@ public class UserRepositoryTest extends BaseTest {
         userRepository.save(user);
 
         // then
-        User foundUser = userRepository.findByUsernameOrEmailAndHashedPassword("tom@ikenga.me", "pw");
+        UserEntity foundUser = userRepository.findByUsernameOrEmailAndHashedPassword("tom@ikenga.me", "pw");
         Assert.assertNotNull(foundUser);
     }
 
     @Test
     public void testFindByEmailAndHashedPasswordNull() {
-        User foundUser = userRepository.findByUsernameOrEmailAndHashedPassword("tom@ikenga.me", "pw");
+        UserEntity foundUser = userRepository.findByUsernameOrEmailAndHashedPassword("tom@ikenga.me", "pw");
         Assert.assertNull(foundUser);
     }
 
-    private User createDummyUser() {
-        User user = new User();
+    private UserEntity createDummyUser() {
+        UserEntity user = new UserEntity("tom");
         user.setEmail("tom@ikenga.me");
         user.setUsername("tom");
         user.setHashedPassword("123");

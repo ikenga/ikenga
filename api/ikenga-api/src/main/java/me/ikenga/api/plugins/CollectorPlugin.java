@@ -1,6 +1,6 @@
 package me.ikenga.api.plugins;
 
-import me.ikenga.api.metrics.MetricValue;
+import me.ikenga.api.feedback.metrics.MetricValue;
 
 import java.util.List;
 

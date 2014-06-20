@@ -1,8 +1,8 @@
 package me.ikenga.user.login;
 
+import me.ikenga.persistence.entity.UserEntity;
+import me.ikenga.persistence.repository.UserRepository;
 import me.ikenga.user.PasswordHasher;
-import me.ikenga.user.User;
-import me.ikenga.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +26,7 @@ public class LoginService {
     public LoginData login(LoginCredentials credentials) throws InvalidLoginCredentialsException {
         String username = credentials.getUsernameOrEmail();
         String hashedPassword = passwordHasher.hashPassword(credentials.getPassword());
-        User user = userRepository.findByUsernameOrEmailAndHashedPassword(username, hashedPassword);
+        UserEntity user = userRepository.findByUsernameOrEmailAndHashedPassword(username, hashedPassword);
         if (user == null) {
             throw new InvalidLoginCredentialsException();
         } else {

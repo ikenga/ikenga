@@ -1,6 +1,6 @@
 package me.ikenga.api.plugins;
 
-import me.ikenga.api.achievements.Badge;
+import me.ikenga.api.feedback.achievements.Badge;
 
 import java.util.List;
 
