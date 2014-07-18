@@ -19,9 +19,6 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author kloe
- */
 public class TokenPage extends DashboardPage {
 
     private static final Logger logger = LoggerFactory.getLogger(HighscoresPage.class);
@@ -33,8 +30,8 @@ public class TokenPage extends DashboardPage {
 
         List<Token> tokenList = new ArrayList<>();
 
-        tokenList.add(metricRepository.findEarliestCommit());
-        tokenList.add(metricRepository.findLatestCommit());
+        tokenList.add(metricRepository.findEarliestCommit().get(0));
+        tokenList.add(metricRepository.findLatestCommit().get(0));
         tokenList.add(metricRepository.findBiggestCommit().get(0));
         tokenList.add(metricRepository.findMostCommits().get(0));
         tokenList.add(metricRepository.findLongestAvgMessageLen().get(0));

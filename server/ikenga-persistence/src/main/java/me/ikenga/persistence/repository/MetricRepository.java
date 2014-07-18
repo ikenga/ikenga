@@ -66,11 +66,11 @@ public interface MetricRepository extends
 
     @Query("select new me.ikenga.api.feedback.token.Token('early bird', m.user.username, m.date, 'earliest Commit on a day') "
             + "from MetricEntity m where to_char(m.date, 'HH24:MI') = (select min(to_char(m.date, 'HH24:MI')) from m) ")
-    Token findEarliestCommit();
+    List<Token> findEarliestCommit();
 
     @Query("select new me.ikenga.api.feedback.token.Token('night owl', m.user.username, m.date, 'latest Commit on a day') "
             + "from MetricEntity m where to_char(m.date, 'HH24:MI') = (select max(to_char(m.date, 'HH24:MI')) from m) ")
-    Token findLatestCommit();
+    List<Token> findLatestCommit();
 
     @Query("select new me.ikenga.api.feedback.token.Token('big shot', m.user.username, sum(m.value), 'Commit with most actions') "
             + "from MetricEntity m "
